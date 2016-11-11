@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello, World! - A-Frame</title>
+    <meta name="description" content="Hello, World! - A-Frame">
+    <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
+    <!-- vive cursor -->
+    <script src="https://rawgit.com/bryik/aframe-vive-cursor-component/master/dist/aframe-vive-cursor-component.min.js"></script>
+    <!-- vive teleport -->
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+    <!-- several components. layout! -->
+    <script src="https://rawgit.com/ngokevin/kframe/master/dist/kframe.min.js"></script>
+    <!-- text rendering -->
+    <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene id="scene">
+
+      <a-assets>
+        <a-mixin id="hud-btn"
+          rotation="-90 0 0"
+          material="shader: flat; color: #30b4aa"
+        ></a-mixin>
+      </a-assets>
+
+      <!-- camera -->
+      <a-entity position="0 0 2.5">
+        <a-entity camera="user-height: 1.7" wasd-controls look-controls>
+
+          <!-- controllers. left hand has teleport, right hand has cursor -->
+          <a-entity
+            hand-controls="left"
+            position="-0.25 -0.25 -0.5"
+            teleport-controls
+          ></a-entity>
+          <a-entity id="cursor"
+            hand-controls="right"
+            position="0.25 -0.25 -0.5"
+            vive-cursor
+          ></a-entity>
+
+          <!-- action selector HUD -->
+          <!-- TODO: always render on top? https://github.com/mrdoob/three.js/issues/1959 -->
+          <a-entity layout="type: circle; radius: 1.2" rotation="90 0 0" position="0 -2 -2">
+            <a-plane mixin="hud-btn" bmfont-text="text: asdf;"></a-plane>
+            <a-plane mixin="hud-btn"></a-plane>
+            <a-plane mixin="hud-btn"></a-plane>
+            <a-plane mixin="hud-btn"></a-plane>
+            <a-plane mixin="hud-btn"></a-plane>
+            <a-plane mixin="hud-btn"></a-plane>
+          </a-entity>
+        </a-camera>
+      </a-entity>
+
+      <!-- demo objects -->
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" look-at="[camera]"></a-box>
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" ></a-plane>
+
+      <a-sky color="#ECECFF"></a-sky>
+    </a-scene>
+  </body>
+</html>
