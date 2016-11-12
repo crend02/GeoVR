@@ -9,6 +9,11 @@
 </template>
 
 <script>
+/**
+ * IDEA: make more abstract -> generic wrapper around a-entity, that accepts any prop
+ * see https://github.com/vuejs/vue/issues/2114 and https://github.com/ngokevin/aframe-react
+ */
+
 export default {
   name: 'geometry',
   // vue arrays dont support easy databinding (?), so we use objects for coordinates
@@ -64,6 +69,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 </style>

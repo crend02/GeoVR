@@ -4,11 +4,15 @@
   "author": "noerw <noerw@gmx.de>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot --port 4000",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot --port 3000",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
     "aframe": "^0.3.2",
+    "aframe-bmfont-text-component": "^0.1.4",
+    "aframe-layout-component": "^3.0.1",
+    "aframe-teleport-controls": "^0.1.0",
+    "aframe-vive-cursor-component": "^0.1.1",
     "vue": "^2.0.1"
   },
   "devDependencies": {
