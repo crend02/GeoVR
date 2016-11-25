@@ -25,18 +25,16 @@
       </a-assets>
 
       <!-- camera -->
-
-      
       <a-entity position="0 0 2.5">
         
         <a-entity camera="user-height: 1.7" wasd-controls look-controls>
           <!-- controllers. left hand has teleport, right hand has cursor -->
           <a-entity
-            hand-controls="left"
+            tracked-controls="left"
             teleport-controls
           ></a-entity>
           <a-entity id="cursor"
-            hand-controls="right"
+            tracked-controls="right"
             vive-cursor
           ></a-entity>
           
@@ -50,7 +48,7 @@
             <a-plane mixin="hud-btn"></a-plane>
             <a-plane mixin="hud-btn"></a-plane>
           </a-entity>
-        </a-camera>
+        </a-entity>
       </a-entity>
 
       <!-- demo objects -->
