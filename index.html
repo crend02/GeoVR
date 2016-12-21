@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <title>Hello, World! - A-Frame</title>
     <meta name="description" content="Hello, World! - A-Frame">
-    <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
+    <script src="aframelib/aframe.min.js"></script>
     <!-- vive cursor -->
-    <script src="https://rawgit.com/bryik/aframe-vive-cursor-component/master/dist/aframe-vive-cursor-component.min.js"></script>
+    <script src="https://rawgit.com/bryik/aframe-vive-cursor-component/master/dist/aframe-vive-cursor-component.min.js"></script>  
     <!-- vive teleport -->
     <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
-    <!-- several components. layout! -->
-    <script src="https://rawgit.com/ngokevin/kframe/master/dist/kframe.min.js"></script>
-    <!-- text rendering -->
-    <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+    <!-- several components. layout! 
+    <script src="https://rawgit.com/ngokevin/kframe/master/dist/kframe.min.js"></script> -->
+    <!-- text rendering 
+    <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script> -->
   </head>
   <body>
     <a-scene id="scene">
@@ -31,16 +31,7 @@
         <a-entity camera="user-height: 9" wasd-controls look-controls>
 
           <!-- controllers. left hand has teleport, right hand has cursor -->
-          <a-entity
-            vive-controls="left"
-            position="-0.25 -0.25 -0.5"
-            teleport-controls
-          ></a-entity>
-          <a-entity id="cursor"
-            vive-controls="right"
-            position="0.25 -0.25 -0.5"
-            vive-cursor
-          ></a-entity>
+          
 
           <!-- action selector HUD -->
           <!-- TODO: always render on top? https://github.com/mrdoob/three.js/issues/1959 -->
@@ -54,6 +45,17 @@
           </a-entity-->
         </a-entity>
       </a-entity>
+
+      <a-entity
+        vive-controls="left"
+        position="-0.25 -0.25 -0.5"
+        teleport-controls
+      ></a-entity>
+      <a-entity id="cursor"
+        vive-controls="right"
+        position="0.25 -0.25 -0.5"
+        vive-cursor
+      ></a-entity>
 
       <a-collada-model src="#buildings"></a-collada-model>
 
