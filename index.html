@@ -28,16 +28,8 @@
 
 
 
-      <a-entity
-        vive-controls="left"
-        
-        teleport-controls
-      ></a-entity>
-      <a-entity id="cursor"
-        vive-controls="right"
-        
-        teleport-controls
-      ></a-entity>
+      <a-entity teleport-controls vive-controls="hand: left" ></a-entity>
+      <a-entity  teleport-controls vive-controls="hand: right"></a-entity>
 
       <a-collada-model src="#buildings"></a-collada-model>
 
