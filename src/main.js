@@ -15,6 +15,8 @@ Vue.config.ignoredElements = [
   'a-assets',
   'a-camera',
   'a-cursor',
+  'a-collada-model',
+  'a-asset-item',
   //'a-entity',
 ];
 
