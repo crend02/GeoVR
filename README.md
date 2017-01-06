@@ -2,15 +2,22 @@
 
 > study project in winter term 2016/17 at ifgi.
 
-WebVR based toolkit for citizens interested in urban planning.
+WebVR based toolkit for urban planners
 
-## build instructions
-If you have `node` installed, you can run a development server, which hosts the site on [`localhost:3000`](http://localhost:3000)
+## Build Setup
 
-```bash
+``` bash
+# install dependencies
 npm install
-npm start
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
 ```
+
+For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## repo structure
 This repository more or less follows the gitflow structure, without a develop branch.

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "uwotm8"
+  },
+  {
+    "material": { "color": "blue", "metalness": 0.5 },
+    "position": { "x": -1.5, "y": 1, "z": -3 }
+  },
+  {
+    "position": { "x": 1, "y": 1, "z": -3 },
+    "geometry": { "primitive": "box" }
+  },
+  {
+    "position": { "x": 0, "y": 1, "z": -2 },
+    "geometry": { "primitive": "plane" },
+    "material": { "color": "green" },
+    "rotation": { "x": 45, "y": 45, "z": 0 }
+  }
+]
