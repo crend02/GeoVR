@@ -27,8 +27,7 @@
 </template>
 
 <script>
-//import AFRAME from './aframe.min.js';
-import AFRAME from 'aframe';
+import AFRAME from './aframe.min.js';
 
 import Geometry from './Geometry.vue';
 import ViveControllers from './ViveControllers.vue';
