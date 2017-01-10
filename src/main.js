@@ -10,6 +10,7 @@ Vue.config.ignoredElements = [
   'a-sphere',
   'a-plane',
   'a-cylinder',
+  'a-node',
   'a-scene',
   'a-mixin',
   'a-assets',

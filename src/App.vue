@@ -6,10 +6,6 @@
         <img id="ground" src="models/buildings/ground.png"/>
       </a-assets>
 
-      <a-camera>
-        <a-cursor color="#4CC3D9" fuse="true" timeout="10"></a-cursor>
-      </a-camera>
-
       <vive-controllers/>
 
       <a-entity layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
