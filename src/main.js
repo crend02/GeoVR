@@ -1,5 +1,7 @@
 import AFRAME from './aframe-master.js';
+import grid from 'aframe-gridhelper-component';
 import teleport from 'aframe-teleport-controls';
-import cursor from 'aframe-vive-cursor-component';
 
-import aframeComponents from './set_sky.js';
+import setSky from './set_sky.js';
+import viveCursor from './vive-cursor.js';
+import vivePlaceObjects from './vive-place-objects.js';

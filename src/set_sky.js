@@ -1,5 +1,7 @@
 /* controls the background for the image tour */
 
+let cachedGridhelperConf = null;
+
 /* toggle modes */
 // need to wait until the DOM is ready for attaching stuff
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -12,10 +14,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			// enable imageview
 			buildingview.setAttribute('visible', 'false');
 			imageview.setAttribute('visible', 'true');
+			cachedGridhelperConf = scene.getAttribute('gridhelper');
+			scene.removeAttribute('gridhelper');
 		} else {
 			// enable buidlingview
 			buildingview.setAttribute('visible', 'true');
 			imageview.setAttribute('visible', 'false');
+			scene.setAttribute('gridhelper', cachedGridhelperConf);
 		}
 	});
 });
