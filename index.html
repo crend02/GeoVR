@@ -13,6 +13,12 @@
       <a-asset-item id="buildings" src="models/buildings/1_SurroundingBuildings.dae">
         <img id="ground" src="models/buildings/ground.png" />
     </a-assets>
+    <a-asset-item id="area" src="models/buildings/area.dae">
+        <img id="ground" src="models/buildings/ground.png" />
+    </a-assets>
+    <a-asset-item id="sparkasse" src="models/buildings/Sparkasse.dae">
+        <img id="ground" src="models/buildings/ground.png" />
+    </a-assets>
 
     <!-- left hand has teleport, right hand has cursor -->
     <a-entity>
@@ -64,6 +70,10 @@
 
     <!-- buildings -->
     <a-collada-model src="#buildings" scale="-1 2 -1" rotation="180 0 0" position="0 4 0"></a-collada-model>
+
+     <a-collada-model src="#sparkasse" scale="-1 2 -1" rotation="180 0 0" position="0 4 0"></a-collada-model>
+
+      <a-collada-model src="#area" scale="-1 2 -1" rotation="180 0 0" position="0 4 0"></a-collada-model>
 
     <!-- floor + sky. TODO: use custom infinite shader for floor -->
     <a-entity id="floor" geometry="primitive: plane" material="color: #EEEEEE" rotation="-90 0 0" scale="180 180 180"></a-entity>
