@@ -1,9 +1,30 @@
+/* controls the background for the image tour */
+
+/* toggle modes */
+// need to wait until the DOM is ready for attaching stuff
+document.addEventListener("DOMContentLoaded", function(event) {
+	document.getElementById('teleport-ctrl').addEventListener('click', function(ev) {
+		const scene = document.querySelector('a-scene')
+		const buildingview = document.getElementById('buildingview')
+		const imageview = document.getElementById('imageview')
+
+		if (buildingview.getAttribute('visible')) {
+			// enable imageview
+			buildingview.setAttribute('visible', 'false');
+			imageview.setAttribute('visible', 'true');
+		} else {
+			// enable buidlingview
+			buildingview.setAttribute('visible', 'true');
+			imageview.setAttribute('visible', 'false');
+		}
+	});
+});
+
 AFRAME.registerComponent('set-sky', {
 	schema: { default: '' },
 	init() {
-		let sky = document.querySelector('a-sky');
-		const entityList = document.querySelectorAll('a-entity');
-		const sky_all = document.querySelectorAll('a-sky');
+		let sky = document.getElementById('image-sky');
+		const entityList = document.querySelectorAll('.imagegallery');
 		const opacity_array = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0];
 
 		this.el.addEventListener('click', () => {
@@ -11,11 +32,8 @@ AFRAME.registerComponent('set-sky', {
 			function opacityTimeoutScaledSky1(i) {
 				setTimeout(function () {
 					sky.setAttribute('opacity', opacity_array[i]);
-					console.log("opacity:" + sky.getAttribute("opacity"));
 
 					if (sky.getAttribute("opacity") === '0') {
-						console.log("change pic");
-						console.log(that.data);
 						sky.setAttribute('src', that.data);
 						//sky.setAttribute('opacity', '1');
 						backloop();
@@ -26,18 +44,14 @@ AFRAME.registerComponent('set-sky', {
 
 			function opacityTimeoutScaledSky2(j) {
 				setTimeout(function () {
-					console.log("timeout2:" + j);
 					sky.setAttribute('opacity', j);
-					console.log("backopacity:" + sky.getAttribute("opacity"));
 				}, 500 * j);
 
 			};
 
 			function backloop() {
-				console.log("Backward loop");
 				for (var j = opacity_array.length; j > 0; j--) {
 					opacityTimeoutScaledSky2(opacity_array[j - 1]);
-					console.log(opacity_array[j - 1]);
 				}
 			};
 
