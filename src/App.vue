@@ -28,7 +28,7 @@
       ></a-collada-model>
 
       <!-- floor + sky. TODO: use custom infinite shader for floor -->
-      <a-entity geometry="primitive: plane" material="color: #EEEEEE"
+      <a-entity id="floor" geometry="primitive: plane" material="color: #EEEEEE"
         rotation="-90 0 0"
         scale="180 180 180"
       ></a-entity>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import AFRAME from './aframe.min.js';
+import AFRAME from './aframe-master.js';
 import aframeComponents from './aframe_components.js';
 
 import Geometry from './Geometry.vue';

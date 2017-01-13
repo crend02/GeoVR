@@ -1,4 +1,4 @@
-import AFRAME from './aframe.min.js'
+import AFRAME from './aframe-master.js'
 
 AFRAME.registerComponent('set-sky', {
   schema: {default: ''},
