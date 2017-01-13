@@ -6,7 +6,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: 'build.js',
+    devtoolLineToLine: {
+      include: 'aframe-vive-cursor-component',
+      exclude: 'src/aframe-master.js'
+    }
   },
   module: {
     rules: [
@@ -41,6 +45,7 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true
   },
+  //devtool: '#source-map'
   devtool: '#eval-source-map'
 }
 
