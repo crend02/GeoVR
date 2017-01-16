@@ -5,12 +5,18 @@
   <meta charset="utf-8">
   <title>geovr-urban-planning</title>
   <script src="/dist/build.js"></script>
+  
+
 </head>
 
 <body>
-  <a-scene fog="color: #8ad; far: 70; near: 30">
+  <a-scene fog="color: #8ad; far: 300; near: 150">
     <a-assets>
       <a-asset-item id="buildings-data" src="models/buildings/1_SurroundingBuildings.dae">
+      <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
+      <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
+      
+      <a-mixin id="tree" scale="0.1 0.1 0.1" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
     </a-assets>
 
     <!-- controllers. left hand has teleport, right hand has cursor -->
@@ -18,8 +24,8 @@
     <a-entity id="cursor-ctrl" vive-place-objects="drawTarget: #floor; placedObjectContainer: #buildingview" vive-cursor="objects: #floor, .placed-object, .imagegallery" vive-controls="hand: right"></a-entity>
 
     <!-- buildingview -->
-    <a-entity id="buildingview" visible="true" gridhelper="size: 40; divisions: 160; colorGrid: #666; colorCenterLine: #666">
-      <a-collada-model id="buildings" src="#buildings-data" scale="-1 2 -1" rotation="180 0 0" position="0 4 0"></a-collada-model>
+    <a-entity id="buildingview" visible="true" gridhelper="size: 120; divisions: 500; colorGrid: #666; colorCenterLine: #666">
+      <a-collada-model id="buildings" src="#buildings-data" scale="-5 4 -5" rotation="180 -11.52 0" position="0 8 0"></a-collada-model>
       <a-entity id="floor" geometry="primitive: plane" material="color: #aaa" rotation="-90 0 0" scale="180 180 180"></a-entity>
       <a-sky color="#66f"></a-sky>
     </a-entity>
@@ -60,8 +66,12 @@
         <a-sphere color="#88E28C" radius="0.2" position="2.24 1 -5" set-sky="/images/middle_left.jpg"></a-sphere>
         <a-sphere id="rf" color="#88E28C" radius="0.2" position="4.25 1 3.95" set-sky="/images/right_front.jpg"></a-sphere>
       </a-entity>
-      <a-sky id="image-sky" opacity="1" radius="30" src="/images/right_front.jpg"></a-sky>
+      <a-sky id="image-sky" opacity="1" radius="150" src="/images/right_front.jpg"></a-sky>
     </a-entity>
+
+    <!-- models voxel -->
+    <a-entity mixin="tree"></a-entity>
+
   </a-scene>
 </body>
 </html>
