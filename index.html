@@ -36,6 +36,11 @@
         <img id="ground" src="models/buildings/ground.png" />
     </a-assets>
 
+     <a-assets>
+        <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
+        <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
+      </a-assets>
+
     <!-- left hand has teleport, right hand has cursor -->
     <a-entity>
       <a-entity teleport-controls vive-controls="hand: left"></a-entity>
@@ -96,6 +101,9 @@
      <a-collada-model src="#buildingsArea" scale="-1 2 -1" rotation="180 0 0" position="5.12 -14.04 18.74"></a-collada-model>
 
      <a-collada-model src="#edeka" scale="-1 2 -1" rotation="180 0 0" position="15.77 -14.03 15.13"></a-collada-model>
+
+     <!-- models voxel -->
+      <a-entity obj-model="obj: #treeObj; mtl: #treeMtl"></a-entity>
 
      
 
