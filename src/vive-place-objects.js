@@ -58,6 +58,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
       // trigger while pointing at placed object toggles dragging mode
       onDragTargetMouseDown: function (ev) {
+        if (this.el.is(STATES.PLACING)) return;
         this.el.addState(STATES.DRAGGING);
         this.dragEl = ev.target;
       }.bind(this),
@@ -116,21 +117,21 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   placeObject (point) {
     // create a new element with the current pointer position & add it to the scene
     const newElement = document.createElement('a-box');
-    newElement.setAttribute('position', [point.x, point.y, point.z].join(' '));
+    if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
+    newElement.setAttribute('position', point);
     newElement.setAttribute('color', '#f00');
     newElement.classList.add(this.data.placedObjectClass);
-    document.querySelector(this.data.placedObjectContainer).appendChild(newElement);
+    this.data.placedObjectContainer.appendChild(newElement);
     newElement.addEventListener('mousedown', this.eventListeners.onDragTargetMouseDown);
     newElement.addEventListener('mouseup', this.eventListeners.onDragTargetMouseUp);
   },
 
   updateTargetPosition (point) {
-    const gridSize = this.data.snapToGrid;
     let el;
     if (this.el.is(STATES.DRAGGING))     el = this.dragEl;
     else if (this.el.is(STATES.PLACING)) el = this.placePreviewEl;
     if (!el) return;
-    if (gridSize) point = snapToGrid(point, gridSize);
-    el.setAttribute('position', [point.x, point.y, point.z].join(' '));
+    if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
+    el.setAttribute('position', point);
   }
 });

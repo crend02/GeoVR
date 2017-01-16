@@ -1,30 +1,4 @@
 /* controls the background for the image tour */
-
-let cachedGridhelperConf = null;
-
-/* toggle modes */
-// need to wait until the DOM is ready for attaching stuff
-document.addEventListener("DOMContentLoaded", function(event) {
-	document.getElementById('teleport-ctrl').addEventListener('click', function(ev) {
-		const scene = document.querySelector('a-scene')
-		const buildingview = document.getElementById('buildingview')
-		const imageview = document.getElementById('imageview')
-
-		if (buildingview.getAttribute('visible')) {
-			// enable imageview
-			buildingview.setAttribute('visible', 'false');
-			imageview.setAttribute('visible', 'true');
-			cachedGridhelperConf = scene.getAttribute('gridhelper');
-			scene.removeAttribute('gridhelper');
-		} else {
-			// enable buidlingview
-			buildingview.setAttribute('visible', 'true');
-			imageview.setAttribute('visible', 'false');
-			scene.setAttribute('gridhelper', cachedGridhelperConf);
-		}
-	});
-});
-
 AFRAME.registerComponent('set-sky', {
 	schema: { default: '' },
 	init() {
