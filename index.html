@@ -8,19 +8,26 @@
 </head>
 
 <body>
-  <a-scene fog="color: #8ad; far: 70; near: 30">
+  <a-scene physics fog="color: #8ad; far: 70; near: 30">
     <a-assets>
       <a-asset-item id="buildings-data" src="models/buildings/1_SurroundingBuildings.dae">
     </a-assets>
 
     <!-- controllers. left hand has teleport, right hand has cursor -->
     <a-entity id="teleport-ctrl" toggle-views teleport-controls vive-controls="hand: left"></a-entity>
-    <a-entity id="cursor-ctrl" vive-place-objects="drawTarget: #floor; placedObjectContainer: #buildingview" vive-cursor="objects: #floor, .placed-object, .imagegallery" vive-controls="hand: right"></a-entity>
+    <a-entity id="cursor-ctrl" vive-place-objects="drawTarget: #floor; placedObjectContainer: #buildingview" vive-cursor="objects: #floor, .placed-object, .imagegallery"
+      vive-controls="hand: right"></a-entity>
+
+    <!-- Player -->
+    <a-entity camera look-controls wasd-controls kinematic-body position="0 1.764 0">
+    </a-entity>
+
+    <a-box static-body color="tomato" depth="2" height="4" width="0.5"></a-box> 
 
     <!-- buildingview -->
     <a-entity id="buildingview" visible="true" gridhelper="size: 40; divisions: 160; colorGrid: #666; colorCenterLine: #666">
-      <a-collada-model id="buildings" src="#buildings-data" scale="-1 2 -1" rotation="180 0 0" position="0 4 0"></a-collada-model>
-      <a-entity id="floor" geometry="primitive: plane" material="color: #aaa" rotation="-90 0 0" scale="180 180 180"></a-entity>
+      <a-collada-model static-body id="buildings" src="#buildings-data" scale="-1 2 -1" rotation="180 0 0" position="0 4 0"></a-collada-model>
+      <a-entity static-body id="floor" geometry="primitive: plane" material="color: #aaa" rotation="-90 0 0" scale="180 180 180"></a-entity>
       <a-sky color="#66f"></a-sky>
     </a-entity>
 
@@ -64,4 +71,5 @@
     </a-entity>
   </a-scene>
 </body>
+
 </html>
