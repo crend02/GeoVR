@@ -22,13 +22,15 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   schema: {
     drawTarget: { type: 'selector', default: '' },
     placedObjectClass: { type: 'string', default: 'placed-object' },
+    placedObjectMixin: { type: 'string', default: 'tree' },
     placedObjectContainer: { type: 'selector', default: 'a-scene' },
     snapToGrid: { default: 1 }, // 0 = disabled, other numbers define grid size
   },
 
   init () {
     // preview of the object we're going to place
-    this.placePreviewEl = document.createElement('a-box');
+    this.placePreviewEl = document.createElement('a-entity');
+    this.placePreviewEl.setAttribute('mixin', this.data.placedObjectMixin);
     this.placePreviewEl.setAttribute('visible', 'false');
     document.querySelector('a-scene').appendChild(this.placePreviewEl);
     this.dragEl = null; // reference to the object we're currently dragging
@@ -48,6 +50,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
       // trackpad toggles placing mode
       onTrackPadDown: function (ev) {
+        console.log(ev.detail);
         this.el.addState(STATES.PLACING);
         this.placePreviewEl.setAttribute('visible', 'true');
       }.bind(this),
@@ -71,13 +74,16 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
   // aframe lifecycle hook: called when component attributes have been changed
   update (oldData) {
-    this.removeEventListeners(oldData.drawTarget, oldData.placedObjectClass);
-
     // abort, if we dont know where to draw on
     if (!this.data.drawTarget)
       return console.error(`[${COMPONENT_NAME}] no valid draw target defined!`);
 
-    this.attachEventListeners();
+    this.placePreviewEl.setAttribute('mixin', this.data.placedObjectMixin);
+
+    if (this.data.drawTarget !== oldData.drawTarget || this.data.placedObjectClass !== oldData.placedObjectClass) {
+      this.removeEventListeners(oldData.drawTarget, oldData.placedObjectClass);
+      this.attachEventListeners();
+    }
   },
 
   // aframe lifecycle hook
@@ -90,7 +96,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     const placedObjs = document.querySelectorAll('.' + placedObjectClass);
     placedObjs.forEach(el => {
       el.addEventListener('mousedown', this.eventListeners.onDragTargetMouseDown);
-      el.addEventListener('mouseup', this.eventListeners.onDragTargetMouseUp)
+      el.addEventListener('mouseup', this.eventListeners.onDragTargetMouseUp);
     });
 
     drawTarget.addEventListener('click', this.eventListeners.onDrawTargetClicked);
@@ -98,13 +104,15 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     drawTarget.addEventListener('raycaster-intersected-cleared', this.eventListeners.onDrawTargetIntersectionClear);
     this.el.addEventListener('trackpaddown', this.eventListeners.onTrackPadDown);
     this.el.addEventListener('trackpadup', this.eventListeners.onTrackPadUp);
+
+    this.el.addEventListener('axismove', (evt) => console.log('axismove', evt.detail));
   },
 
   removeEventListeners (drawTarget = this.data.drawTarget, placedObjectClass = this.data.placedObjectClass) {
     const placedObjs = document.querySelectorAll('.' + placedObjectClass);
     placedObjs.forEach(el => {
       el.removeEventListener('mousedown', this.eventListeners.onDragTargetMouseDown);
-      el.removeEventListener('mouseup', this.eventListeners.onDragTargetMouseUp)
+      el.removeEventListener('mouseup', this.eventListeners.onDragTargetMouseUp);
     });
 
     drawTarget.removeEventListener('click', this.eventListeners.onDrawTargetClicked);
@@ -116,10 +124,10 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
   placeObject (point) {
     // create a new element with the current pointer position & add it to the scene
-    const newElement = document.createElement('a-box');
+    const newElement = document.createElement('a-entity');
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
     newElement.setAttribute('position', point);
-    newElement.setAttribute('color', '#f00');
+    newElement.setAttribute('mixin', this.data.placedObjectMixin);
     newElement.classList.add(this.data.placedObjectClass);
     this.data.placedObjectContainer.appendChild(newElement);
     newElement.addEventListener('mousedown', this.eventListeners.onDragTargetMouseDown);
