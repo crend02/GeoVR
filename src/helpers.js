@@ -13,3 +13,8 @@ export function snapToGrid (point, gridSize = 1) {
     z: gridSize * Math.round(point.z / gridSize)
   }
 }
+
+/* fixed modulo, which returns positive values for negative inputs */
+export function modulo (v, n) {
+  return (v % n + n) % n;
+}

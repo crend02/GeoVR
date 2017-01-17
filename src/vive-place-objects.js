@@ -20,19 +20,14 @@ const STATES = {
 
 AFRAME.registerComponent(COMPONENT_NAME, {
   schema: {
-    drawTarget: { type: 'selector', default: '' },
+    drawTarget: { type: 'selector', default: '#floor' },
     placedObjectClass: { type: 'string', default: 'placed-object' },
-    placedObjectMixin: { type: 'string', default: 'tree' },
+    placedObjectMixin: { type: 'string', default: '' },
     placedObjectContainer: { type: 'selector', default: 'a-scene' },
     snapToGrid: { default: 1 }, // 0 = disabled, other numbers define grid size
   },
 
   init () {
-    // preview of the object we're going to place
-    this.placePreviewEl = document.createElement('a-entity');
-    this.placePreviewEl.setAttribute('mixin', this.data.placedObjectMixin);
-    this.placePreviewEl.setAttribute('visible', 'false');
-    document.querySelector('a-scene').appendChild(this.placePreviewEl);
     this.dragEl = null; // reference to the object we're currently dragging
 
     // define the listeners here, so we can bind them to 'this'.
@@ -48,9 +43,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
           this.placeObject(ev.detail.intersection.point);
       }.bind(this),
 
-      // trackpad toggles placing mode
+      // trackpad down toggles placing mode
       onTrackPadDown: function (ev) {
-        console.log(ev.detail);
+        if (ev.detail.cardinal !== 'down') return;
         this.el.addState(STATES.PLACING);
         this.placePreviewEl.setAttribute('visible', 'true');
       }.bind(this),
@@ -78,7 +73,11 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     if (!this.data.drawTarget)
       return console.error(`[${COMPONENT_NAME}] no valid draw target defined!`);
 
+    // create preview of the object we're going to place in DOM
+    this.placePreviewEl = document.createElement('a-entity');
     this.placePreviewEl.setAttribute('mixin', this.data.placedObjectMixin);
+    this.placePreviewEl.setAttribute('visible', 'false');
+    document.querySelector('a-scene').appendChild(this.placePreviewEl);
 
     if (this.data.drawTarget !== oldData.drawTarget || this.data.placedObjectClass !== oldData.placedObjectClass) {
       this.removeEventListeners(oldData.drawTarget, oldData.placedObjectClass);
@@ -102,10 +101,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     drawTarget.addEventListener('click', this.eventListeners.onDrawTargetClicked);
     drawTarget.addEventListener('raycaster-intersected', this.eventListeners.onDrawTargetIntersection);
     drawTarget.addEventListener('raycaster-intersected-cleared', this.eventListeners.onDrawTargetIntersectionClear);
-    this.el.addEventListener('trackpaddown', this.eventListeners.onTrackPadDown);
+    this.el.addEventListener('trackpad-button-down', this.eventListeners.onTrackPadDown);
     this.el.addEventListener('trackpadup', this.eventListeners.onTrackPadUp);
-
-    this.el.addEventListener('axismove', (evt) => console.log('axismove', evt.detail));
+    this.el.addEventListener('axismove', this.eventListeners.onTrackpadDirectionUpdate);
   },
 
   removeEventListeners (drawTarget = this.data.drawTarget, placedObjectClass = this.data.placedObjectClass) {
@@ -120,12 +118,14 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     drawTarget.removeEventListener('raycaster-intersected-cleared', this.eventListeners.onDrawTargetIntersectionClear);
     this.el.removeEventListener('trackpaddown', this.eventListeners.onTrackPadDown);
     this.el.removeEventListener('trackpadup', this.eventListeners.onTrackPadUp);
+    this.el.removeEventListener('axismove', this.eventListeners.onTrackpadDirectionUpdate);
   },
 
   placeObject (point) {
     // create a new element with the current pointer position & add it to the scene
     const newElement = document.createElement('a-entity');
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
+    point.y += 0.001; // avoid z-index interference 
     newElement.setAttribute('position', point);
     newElement.setAttribute('mixin', this.data.placedObjectMixin);
     newElement.classList.add(this.data.placedObjectClass);
