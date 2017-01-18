@@ -19,10 +19,11 @@ const STATES = {
 };
 
 AFRAME.registerComponent(COMPONENT_NAME, {
+  //dependencies: ['vive-cursor', 'vive-controls', 'vive-trackpad-controls'],
   schema: {
-    drawTarget: { type: 'selector', default: '#floor' },
+    drawTarget: { type: 'selector' },
     placedObjectClass: { type: 'string', default: 'placed-object' },
-    placedObjectMixin: { type: 'string', default: '' },
+    placedObjectMixin: { type: 'string' },
     placedObjectContainer: { type: 'selector', default: 'a-scene' },
     snapToGrid: { default: 1 }, // 0 = disabled, other numbers define grid size
   },
@@ -73,22 +74,32 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     if (!this.data.drawTarget)
       return console.error(`[${COMPONENT_NAME}] no valid draw target defined!`);
 
-    // create preview of the object we're going to place in DOM
-    this.placePreviewEl = document.createElement('a-entity');
-    this.placePreviewEl.setAttribute('mixin', this.data.placedObjectMixin);
-    this.placePreviewEl.setAttribute('visible', 'false');
-    document.querySelector('a-scene').appendChild(this.placePreviewEl);
+    // (re)create the preview entity
+    if (!this.placePreviewEl || this.data.placedObjectMixin !== oldData.placedObjectMixin) {
+      // FIXME: throws weird error on first call?
+      if (this.placePreviewEl)
+        this.el.sceneEl.removeChild(this.placePreviewEl);
+      this.placePreviewEl = document.createElement('a-entity');
+      if (this.data.placedObjectMixin)
+        this.placePreviewEl.setAttribute('mixin', this.data.placedObjectMixin);
+      this.el.sceneEl.appendChild(this.placePreviewEl);
 
+      // hide the preview. if its recreated wait a bit to give feedback
+      setTimeout(() => {
+        this.placePreviewEl.setAttribute('visible', false);
+      }, !this.placePreviewEl ? 0 : 600);
+    }
+
+    // (re)attach the listeners, when drawtarget or objectclass changed
     if (this.data.drawTarget !== oldData.drawTarget || this.data.placedObjectClass !== oldData.placedObjectClass) {
       this.removeEventListeners(oldData.drawTarget, oldData.placedObjectClass);
       this.attachEventListeners();
     }
   },
 
-  // aframe lifecycle hook
   remove () {
     this.removeEventListeners(this.data.drawTarget);
-    document.querySelector('a-scene').removeChild(this.placePreviewEl);
+    this.el.sceneEl.removeChild(this.placePreviewEl);
   },
 
   attachEventListeners (drawTarget = this.data.drawTarget, placedObjectClass = this.data.placedObjectClass) {
@@ -125,7 +136,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     // create a new element with the current pointer position & add it to the scene
     const newElement = document.createElement('a-entity');
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
-    point.y += 0.001; // avoid z-index interference 
+    point.y += 0.001; // avoid z-index interference
     newElement.setAttribute('position', point);
     newElement.setAttribute('mixin', this.data.placedObjectMixin);
     newElement.classList.add(this.data.placedObjectClass);

@@ -12,6 +12,7 @@ import { modulo } from './helpers.js'
 const COMPONENT_NAME = 'vive-object-palette';
 
 AFRAME.registerComponent(COMPONENT_NAME, {
+  dependencies: ['vive-place-objects'],
   schema: {
     // comma separated array of mixins, wich we iterate through
     values: { type: 'array', default: ['tree', 'street', 'greenarea'] },
@@ -56,7 +57,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
   onTrackpadScroll (ev) {
     if (ev.detail.direction === 'cw')       this.i++;
-    else if (ev.detail.direction === 'ccw') this.i++;
+    else if (ev.detail.direction === 'ccw') this.i--;
     this.setTargetProperty();
   },
 
