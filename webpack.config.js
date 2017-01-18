@@ -8,7 +8,6 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js',
     devtoolLineToLine: {
-      include: 'aframe-vive-cursor-component',
       exclude: 'src/aframe-master.js'
     }
   },
@@ -34,6 +33,7 @@ module.exports = {
         }
       },
       { test: /\.json$/, loader: 'json-loader' },
+      { test: /\.html$/, loader: 'raw-loader' },
     ]
   },
   resolve: {

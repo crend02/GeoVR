@@ -8,3 +8,8 @@ import viveCursor from './vive-cursor.js';
 import vivePlaceObjects from './vive-place-objects.js';
 import viveTrackpadControls from './vive-trackpad-controls';
 import viveObjectPalette from './vive-object-palette';
+
+// for hot reloading of index html
+if (process.env.NODE_ENV !== 'production') {
+  require('file!../index.html')
+}
