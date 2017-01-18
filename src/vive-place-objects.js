@@ -7,14 +7,13 @@
  * depends on vive-controls & vive-cursor.
  */
 
-// TODO: configuration: object type, button mapping?
-
 import AFRAME from './aframe-master.js'
 import { snapToGrid } from './helpers.js'
 
 const COMPONENT_NAME = 'vive-place-objects';
 const STATES = {
   PLACING: COMPONENT_NAME + '_placing',
+  DRAWING: COMPONENT_NAME + '_drawing',
   DRAGGING: COMPONENT_NAME + '_dragging'
 };
 
@@ -30,42 +29,19 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
   init () {
     this.dragEl = null; // reference to the object we're currently dragging
+    this.previewEl = null; // reference to the preview entity
+    this.previewTimeout = null; // timeoutId for preview of new object
+    this.drawTargetIntersection = null; // point of intersection, when intersecting with drawTarget
 
-    // define the listeners here, so we can bind them to 'this'.
+    // define the listeners on this.el here, so we can bind them to 'this'.
     this.eventListeners = {
-      // update position of dragged/preview object while we're pointing on the draw target
-      onDrawTargetIntersection: function (ev) {
-        this.updateTargetPosition(ev.detail.intersection.point);
-      }.bind(this),
-
-      // when in placing mode, place a object by pressing the trigger
-      onDrawTargetClicked: function (ev) {
-        if (this.el.is(STATES.PLACING))
-          this.placeObject(ev.detail.intersection.point);
-      }.bind(this),
-
-      // trackpad down toggles placing mode
-      onTrackPadDown: function (ev) {
-        if (ev.detail.cardinal !== 'down') return;
-        this.el.addState(STATES.PLACING);
-        this.placePreviewEl.setAttribute('visible', 'true');
-      }.bind(this),
-      onTrackPadUp: function (ev) {
-        this.el.removeState(STATES.PLACING);
-        this.placePreviewEl.setAttribute('visible', 'false');
-      }.bind(this),
-
-      // trigger while pointing at placed object toggles dragging mode
-      onDragTargetMouseDown: function (ev) {
-        if (this.el.is(STATES.PLACING)) return;
-        this.el.addState(STATES.DRAGGING);
-        this.dragEl = ev.target;
-      }.bind(this),
-      onDragTargetMouseUp: function (ev) {
-        this.el.removeState(STATES.DRAGGING);
-        this.dragEl = null;
-      }.bind(this)
+      'trackpad-button-down': this.onTrackPadDown.bind(this),
+      'trackpadup': this.onTrackPadUp.bind(this),
+      'mouseup': this.onTriggerUp.bind(this),
+      'raycaster-intersection': this.onIntersection.bind(this)
     };
+    // applied to .placed-object, not this.el
+    this.onDragTargetTriggerDown = this.onDragTargetTriggerDown.bind(this);
   },
 
   // aframe lifecycle hook: called when component attributes have been changed
@@ -75,82 +51,110 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       return console.error(`[${COMPONENT_NAME}] no valid draw target defined!`);
 
     // (re)create the preview entity
-    if (!this.placePreviewEl || this.data.placedObjectMixin !== oldData.placedObjectMixin) {
+    if (!this.previewEl || this.data.placedObjectMixin !== oldData.placedObjectMixin) {
       // FIXME: throws weird error on first call?
-      if (this.placePreviewEl)
-        this.el.sceneEl.removeChild(this.placePreviewEl);
-      this.placePreviewEl = document.createElement('a-entity');
+      if (this.previewEl) this.el.sceneEl.removeChild(this.previewEl);
+      this.previewEl = document.createElement('a-entity');
+      this.el.sceneEl.appendChild(this.previewEl);
       if (this.data.placedObjectMixin)
-        this.placePreviewEl.setAttribute('mixin', this.data.placedObjectMixin);
-      this.el.sceneEl.appendChild(this.placePreviewEl);
+        this.previewEl.setAttribute('mixin', this.data.placedObjectMixin);
+      // reset material, so preview separates from the actual entity
+      this.previewEl.setAttribute('material', 'color: #888');
+      this.previewEl.setAttribute('obj-model', { mtl: null });
+      this.previewEl.setAttribute('id', COMPONENT_NAME + '-preview');
 
       // hide the preview. if its recreated wait a bit to give feedback
-      setTimeout(() => {
-        this.placePreviewEl.setAttribute('visible', false);
-      }, !this.placePreviewEl ? 0 : 600);
+      if (this.previewTimeout) clearTimeout(this.previewTimeout);
+      this.previewTimeout = setTimeout(() => {
+        if (!this.el.is(STATES.PLACING)) this.previewEl.setAttribute('visible', false);
+      }, !this.previewEl ? 0 : 666);
     }
 
     // (re)attach the listeners, when drawtarget or objectclass changed
-    if (this.data.drawTarget !== oldData.drawTarget || this.data.placedObjectClass !== oldData.placedObjectClass) {
-      this.removeEventListeners(oldData.drawTarget, oldData.placedObjectClass);
+    if (this.data.placedObjectClass !== oldData.placedObjectClass) {
+      this.removeEventListeners(oldData.placedObjectClass);
       this.attachEventListeners();
     }
   },
 
   remove () {
-    this.removeEventListeners(this.data.drawTarget);
-    this.el.sceneEl.removeChild(this.placePreviewEl);
+    this.removeEventListeners();
+    this.el.sceneEl.removeChild(this.previewEl);
   },
 
-  attachEventListeners (drawTarget = this.data.drawTarget, placedObjectClass = this.data.placedObjectClass) {
-    const placedObjs = document.querySelectorAll('.' + placedObjectClass);
-    placedObjs.forEach(el => {
-      el.addEventListener('mousedown', this.eventListeners.onDragTargetMouseDown);
-      el.addEventListener('mouseup', this.eventListeners.onDragTargetMouseUp);
-    });
-
-    drawTarget.addEventListener('click', this.eventListeners.onDrawTargetClicked);
-    drawTarget.addEventListener('raycaster-intersected', this.eventListeners.onDrawTargetIntersection);
-    drawTarget.addEventListener('raycaster-intersected-cleared', this.eventListeners.onDrawTargetIntersectionClear);
-    this.el.addEventListener('trackpad-button-down', this.eventListeners.onTrackPadDown);
-    this.el.addEventListener('trackpadup', this.eventListeners.onTrackPadUp);
-    this.el.addEventListener('axismove', this.eventListeners.onTrackpadDirectionUpdate);
+  attachEventListeners () {
+    for (const event in this.eventListeners)
+      this.el.addEventListener(event, this.eventListeners[event]);
+    for (const el of document.querySelectorAll('.' + this.placedObjectClass))
+      el.addEventListener('mousedown', this.onDragTargetTriggerDown);
   },
 
-  removeEventListeners (drawTarget = this.data.drawTarget, placedObjectClass = this.data.placedObjectClass) {
-    const placedObjs = document.querySelectorAll('.' + placedObjectClass);
-    placedObjs.forEach(el => {
-      el.removeEventListener('mousedown', this.eventListeners.onDragTargetMouseDown);
-      el.removeEventListener('mouseup', this.eventListeners.onDragTargetMouseUp);
-    });
+  removeEventListeners (placedObjectClass = this.data.placedObjectClass) {
+    for (const event in this.eventListeners)
+      this.el.removeEventListener(event, this.eventListeners[event]);
+    for (const el of document.querySelectorAll('.' + placedObjectClass))
+      el.removeEventListener('mousedown', this.onDragTargetTriggerDown);
+  },
 
-    drawTarget.removeEventListener('click', this.eventListeners.onDrawTargetClicked);
-    drawTarget.removeEventListener('raycaster-intersected', this.eventListeners.onDrawTargetIntersection);
-    drawTarget.removeEventListener('raycaster-intersected-cleared', this.eventListeners.onDrawTargetIntersectionClear);
-    this.el.removeEventListener('trackpaddown', this.eventListeners.onTrackPadDown);
-    this.el.removeEventListener('trackpadup', this.eventListeners.onTrackPadUp);
-    this.el.removeEventListener('axismove', this.eventListeners.onTrackpadDirectionUpdate);
+  // check if cursor intersects with the drawTarget and update intersection point
+  onIntersection (ev) {
+    this.drawTargetIntersection = null;
+    for (let i = 0; i < ev.detail.els.length; i++) {
+      if (ev.detail.els[i] === this.data.drawTarget) {
+        this.drawTargetIntersection = ev.detail.intersections[i].point;
+        this.updateTargetPosition(ev.detail.intersections[i].point);
+        break;
+      }
+    }
+  },
+
+  // trigger down while pointing at placed object enables dragging mode
+  onDragTargetTriggerDown (ev) {
+    if (this.el.is(STATES.PLACING)) return; // can't drag while placing
+    this.el.addState(STATES.DRAGGING);
+    this.dragEl = ev.target;
+  },
+  // trigger up places object in placing mode, disables dragging mode
+  onTriggerUp (ev) {
+    if (this.el.is(STATES.PLACING) && this.drawTargetIntersection)
+      this.placeObject(this.drawTargetIntersection);
+    this.el.removeState(STATES.DRAGGING);
+    this.dragEl = null;
+  },
+
+  onTrackPadDown (ev) {
+    // lower trackpad enables placing mode
+    if (ev.detail.cardinal === 'down') this.el.addState(STATES.PLACING);
+    // upper trackpad enables drawing mode
+    else if (ev.detail.cardinal === 'up') this.el.addState(STATES.DRAWING);
+    this.previewEl.setAttribute('visible', 'true');
+  },
+  onTrackPadUp (ev) {
+    this.el.removeState(STATES.PLACING);
+    this.el.removeState(STATES.DRAWING);
+    this.previewEl.setAttribute('visible', 'false');
   },
 
   placeObject (point) {
     // create a new element with the current pointer position & add it to the scene
     const newElement = document.createElement('a-entity');
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
-    point.y += 0.001; // avoid z-index interference
+    point.y += 0.001; // avoid z-fighting
     newElement.setAttribute('position', point);
     newElement.setAttribute('mixin', this.data.placedObjectMixin);
     newElement.classList.add(this.data.placedObjectClass);
     this.data.placedObjectContainer.appendChild(newElement);
-    newElement.addEventListener('mousedown', this.eventListeners.onDragTargetMouseDown);
-    newElement.addEventListener('mouseup', this.eventListeners.onDragTargetMouseUp);
+    newElement.addEventListener('mousedown', this.onDragTargetTriggerDown);
   },
 
   updateTargetPosition (point) {
     let el;
-    if (this.el.is(STATES.DRAGGING))     el = this.dragEl;
-    else if (this.el.is(STATES.PLACING)) el = this.placePreviewEl;
-    if (!el) return;
+    if (this.el.is(STATES.DRAWING)) this.placeObject(point);
+    if (this.el.is(STATES.DRAGGING)) el = this.dragEl;
+    if (!el) el = this.previewEl;
+
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
+    point.y += 0.001; // avoid z-fighting
     el.setAttribute('position', point);
   }
 });

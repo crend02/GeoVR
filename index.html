@@ -30,9 +30,8 @@
 
     <!-- buildingview -->
     <a-entity id="buildingview" visible="true" gridhelper="size: 80; divisions: 320; colorGrid: #666; colorCenterLine: #666">
-      <a-entity mixin="tree"></a-entity>
       <a-collada-model id="buildings" src="#buildings-data" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
-      <a-entity id="floor" geometry="primitive: plane" material="color: #aaa" rotation="-90 0 0" scale="180 180 180"></a-entity>
+      <a-entity id="floor" geometry="primitive: plane" material="color: #aaa" rotation="-90 0 0" position="0 -0.001 0" scale="180 180 180"></a-entity>
       <a-sky color="#66f"></a-sky>
     </a-entity>
 

@@ -11,5 +11,5 @@ import viveObjectPalette from './vive-object-palette';
 
 // for hot reloading of index html
 if (process.env.NODE_ENV !== 'production') {
-  require('file!../index.html')
+  require('../index.html')
 }
