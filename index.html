@@ -5,113 +5,74 @@
   <meta charset="utf-8">
   <title>geovr-urban-planning</title>
   <script src="/dist/build.js"></script>
-  
-
-</head>
+  </head>
 
 <body>
-  <a-scene>
+  <a-scene fog="color: #8ad; far: 120; near: 70">
     <a-assets>
-      <a-asset-item id="buildings" src="models/buildings/1_SurroundingBuildings.dae">
-        <img id="ground" src="models/buildings/ground.png" />
+      <a-asset-item id="buildings-data" src="models/buildings/1_SurroundingBuildings.dae">
+      <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
+      <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
+
+      <a-mixin id="tree" scale="0.03 0.025 0.03" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
+      <a-mixin id="greenarea" geometry="primitive: plane" rotation="-90 0 0" material="color: #2a4"></a-mixin>
     </a-assets>
 
-     <a-assets>
-    <a-asset-item id="area" src="models/buildings/Area.dae">
-        <img id="ground" src="models/buildings/ground.png" />
-    </a-assets>
+    <!-- controllers. left hand has teleport, right hand has cursor -->
+    <a-entity id="teleport-ctrl" toggle-views teleport-controls="curveShootingSpeed: 10" vive-controls="hand: left"></a-entity>
+    <a-entity id="cursor-ctrl"
+      vive-controls="hand: right"
+      vive-cursor="objects: #floor, .placed-object, .imagegallery"
+      vive-trackpad-controls
+      vive-object-palette="values: tree, greenarea; target: vive-place-objects/placedObjectMixin"
+      vive-place-objects="drawTarget: #floor; placedObjectContainer: #buildingview"
+    ></a-entity>
 
-     <a-assets>
-    <a-asset-item id="parkingarea" src="models/buildings/Parkingarea.dae">
-        <img id="ground" src="models/buildings/ground.png" />
-    </a-assets>
-
-     <a-assets>
-    <a-asset-item id="buildingsArea" src="models/buildings/buildingsArea.dae">
-        <img id="ground" src="models/buildings/ground.png" />
-    </a-assets>
-
-     <a-assets>
-    <a-asset-item id="edeka" src="models/buildings/edeka.dae">
-        <img id="ground" src="models/buildings/ground.png" />
-    </a-assets>
-
-     <a-assets>
-        <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
-        <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
-      </a-assets>
-
-    <!-- left hand has teleport, right hand has cursor -->
-    <a-entity>
-      <a-entity teleport-controls vive-controls="hand: left"></a-entity>
-      <a-entity vive-cursor="objects: #floor" vive-controls="hand: right"></a-entity>
+    <!-- buildingview -->
+    <a-entity id="buildingview" visible="true" gridhelper="size: 80; divisions: 320; colorGrid: #666; colorCenterLine: #666">
+      <a-collada-model id="buildings" src="#buildings-data" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
+      <a-entity id="floor" geometry="primitive: plane" material="color: #aaa" rotation="-90 0 0" position="0 -0.001 0" scale="180 180 180"></a-entity>
+      <a-sky color="#66f"></a-sky>
     </a-entity>
 
-    <a-entity id="images_start" visible="true" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
-      <a-sphere id="rm" color="#88E28C" radius="0.2" position="0.53 1 -7.33" set-sky="/images/right_middle.jpg"></a-sphere>
-      <a-sphere color="#88E28C" radius="0.2" position="-5.37 1 -3.35" set-sky="/images/left_front.jpg"></a-sphere>
+    <!-- imagetour -->
+    <a-entity id="imageview" visible="false">
+      <a-entity class="imagegallery" id="images_start" visible="true" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="rm" color="#88E28C" radius="0.2" position="0.53 1 -7.33" set-sky="/images/right_middle.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-5.37 1 -3.35" set-sky="/images/left_front.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_2" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="rb" color="#88E28C" radius="0.2" position="4.53 1 -5.04" set-sky="/images/right_back.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-4 0.61 -5.50" set-sky="/images/middle_center.jpg"></a-sphere>
+        <a-sphere id="rf" color="#88E28C" radius="0.2" position="-6.51 1   4.54" set-sky="/images/right_front.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_3" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="cb" color="#88E28C" radius="0.2" position="-4.15 1 -5.35" set-sky="/images/center_back.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-5.89 1 5.41" set-sky="/images/right_middle.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_4" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="rb" color="#88E28C" radius="0.2" position="2 1 -7.16" set-sky="/images/right_back.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-2.77 1 4.34" set-sky="/images/left_back.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_5" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="cb" color="#88E28C" radius="0.2" position="1.91 1 -3.70" set-sky="/images/center_back.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-1.76 1 3.82" set-sky="/images/middle_left.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_6" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="lb" color="#88E28C" radius="0.2" position="-3 1 3.71" set-sky="/images/left_back.jpg"></a-sphere>
+        <a-sphere id="mc" color="#88E28C" radius="0.2" position="-6 1 -1.70" set-sky="/images/middle_center.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="1.96 1 -4.69" set-sky="/images/left_front.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_7" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="rm" color="#88E28C" radius="0.2" position="-1.76 1 3.82" set-sky="/images/right_middle.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="0.53 1 -7.33" set-sky="/images/middle_left.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_8" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere color="#88E28C" radius="0.2" position="2.24 1 -5" set-sky="/images/middle_left.jpg"></a-sphere>
+        <a-sphere id="rf" color="#88E28C" radius="0.2" position="4.25 1 3.95" set-sky="/images/right_front.jpg"></a-sphere>
+      </a-entity>
+      <a-sky id="image-sky" opacity="1" radius="70" src="/images/right_front.jpg"></a-sky>
     </a-entity>
-
-    <a-entity id="images_2" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
-      <a-sphere id="rb" color="#88E28C" radius="0.2" position="4.53 1 -5.04" set-sky="/images/right_back.jpg"></a-sphere>
-      <a-sphere color="#88E28C" radius="0.2" position="-4 0.61 -5.50" set-sky="/images/middle_center.jpg"></a-sphere>
-      <a-sphere id="rf" color="#88E28C" radius="0.2" position="-6.51 1   4.54" set-sky="/images/right_front.jpg"></a-sphere>
-    </a-entity>
-
-    <a-entity id="images_3" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
-      <a-sphere id="cb" color="#88E28C" radius="0.2" position="-4.15 1 -5.35" set-sky="/images/center_back.jpg"></a-sphere>
-      <a-sphere color="#88E28C" radius="0.2" position="-5.89 1 5.41" set-sky="/images/right_middle.jpg"></a-sphere>
-    </a-entity>
-
-    <a-entity id="images_4" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
-      <a-sphere id="rb" color="#88E28C" radius="0.2" position="2 1 -7.16" set-sky="/images/right_back.jpg"></a-sphere>
-      <a-sphere color="#88E28C" radius="0.2" position="-2.77 1 4.34" set-sky="/images/left_back.jpg"></a-sphere>
-    </a-entity>
-
-    <a-entity id="images_5" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
-      <a-sphere id="cb" color="#88E28C" radius="0.2" position="1.91 1 -3.70" set-sky="/images/center_back.jpg"></a-sphere>
-      <a-sphere color="#88E28C" radius="0.2" position="-1.76 1 3.82" set-sky="/images/middle_left.jpg"></a-sphere>
-    </a-entity>
-
-    <a-entity id="images_6" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
-      <a-sphere id="lb" color="#88E28C" radius="0.2" position="-3 1 3.71" set-sky="/images/left_back.jpg"></a-sphere>
-      <a-sphere id="mc" color="#88E28C" radius="0.2" position="-6 1 -1.70" set-sky="/images/middle_center.jpg"></a-sphere>
-      <a-sphere color="#88E28C" radius="0.2" position="1.96 1 -4.69" set-sky="/images/left_front.jpg"></a-sphere>
-    </a-entity>
-
-    <a-entity id="images_7" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
-      <a-sphere id="rm" color="#88E28C" radius="0.2" position="-1.76 1 3.82" set-sky="/images/right_middle.jpg"></a-sphere>
-      <a-sphere color="#88E28C" radius="0.2" position="0.53 1 -7.33" set-sky="/images/middle_left.jpg"></a-sphere>
-    </a-entity>
-
-    <a-entity id="images_8" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
-      <a-sphere color="#88E28C" radius="0.2" position="2.24 1 -5" set-sky="/images/middle_left.jpg"></a-sphere>
-      <a-sphere id="rf" color="#88E28C" radius="0.2" position="4.25 1 3.95" set-sky="/images/right_front.jpg"></a-sphere>
-    </a-entity>
-
-     
-    <!-- buildings -->
-   <!--  <a-collada-model src="#buildings" scale="-1 2 -1" rotation="180 0 0" position="0 4 0"></a-collada-model> -->
-
-     <a-collada-model src="#area" scale="-1 2 -1" rotation="180 0 0" position=".78 -14.82 5.44"></a-collada-model>
-
-     <a-collada-model src="#parkingarea" scale="-1 2 -1" rotation="180 0 0" position="4.2 -16 4.8"></a-collada-model>
-
-    
-     <a-collada-model src="#buildingsArea" scale="-1 2 -1" rotation="180 0 0" position="5.12 -14.04 18.74"></a-collada-model>
-
-     <a-collada-model src="#edeka" scale="-1 2 -1" rotation="180 0 0" position="15.77 -14.03 15.13"></a-collada-model>
-
-     <!-- models voxel -->
-      <a-entity obj-model="obj: #treeObj; mtl: #treeMtl"></a-entity>
-
-     
-
-    <!-- floor + sky. TODO: use custom infinite shader for floor -->
-    <!-- <a-entity id="floor" geometry="primitive: plane" material="color: #EEEEEE" rotation="-90 0 0" scale="180 180 180"></a-entity> -->
-
-    <a-sky id="sky_1" opacity="1" radius="360" src="/images/right_front.jpg"></a-sky>
   </a-scene>
 </body>
-
 </html>
