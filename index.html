@@ -13,8 +13,40 @@
       <a-asset-item id="buildings-data" src="models/buildings/1_SurroundingBuildings.dae">
       <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
       <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
+      <a-asset-item id="benchObj" src="models/objects/bench.obj"></a-asset-item>
+      <a-asset-item id="benchMtl" src="models/objects/bench.mtl"></a-asset-item>
+      <a-asset-item id="footpathObj" src="models/objects/footpath.obj"></a-asset-item>
+      <a-asset-item id="footpathMtl" src="models/objects/footpath.mtl"></a-asset-item>
+      <a-asset-item id="parkingareaObj" src="models/objects/parkingarea.obj"></a-asset-item>
+      <a-asset-item id="parikingareaMtl" src="models/objects/parkingarea.mtl"></a-asset-item>
+      <a-asset-item id="privatebuildingObj" src="models/objects/privatebuilding.obj"></a-asset-item>
+      <a-asset-item id="privatebuildingMtl" src="models/objects/privatebuilding.mtl"></a-asset-item>
+      <a-asset-item id="privatebuilding2Obj" src="models/objects/privatebuilding2.obj"></a-asset-item>
+      <a-asset-item id="privatebuilding2Mtl" src="models/objects/privatebuilding2.mtl"></a-asset-item>
+      <a-asset-item id="storeObj" src="models/objects/store.obj"></a-asset-item>
+      <a-asset-item id="storeMtl" src="models/objects/store.mtl"></a-asset-item>
+      <a-asset-item id="store2Obj" src="models/objects/store2.obj"></a-asset-item>
+      <a-asset-item id="store2Mtl" src="models/objects/store2.mtl"></a-asset-item>
+      <a-asset-item id="streetObj" src="models/objects/street.obj"></a-asset-item>
+      <a-asset-item id="streeMtl" src="models/objects/street.mtl"></a-asset-item>
+      <a-asset-item id="street2Obj" src="models/objects/street2.obj"></a-asset-item>
+      <a-asset-item id="street2Mtl" src="models/objects/street2.mtl"></a-asset-item>
+      <a-asset-item id="publicbuildingObj" src="models/objects/publicbuilding.obj"></a-asset-item>
+      <a-asset-item id="publicbuildingMtl" src="models/objects/publicbuilding.mtl"></a-asset-item>
+     
+      
 
       <a-mixin id="tree" scale="0.03 0.025 0.03" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
+      <a-mixin id="bench" scale="0.003 0.0025 0.003" obj-model="obj: #benchObj; mtl: #benchMtl"></a-mixin>
+      <a-mixin id="footpath" scale="0.03 0.025 0.03" obj-model="obj: #footpathObj; mtl: #footpathMtl"></a-mixin>
+      <a-mixin id="parkingarea" scale="0.03 0.025 0.03" obj-model="obj: #parkingareaObj; mtl: #parkingareaMtl"></a-mixin>
+      <a-mixin id="privatebuilding" scale="0.03 0.025 0.03" obj-model="obj: #privatebuldingObj; mtl: #privatebuildingMtl"></a-mixin>
+      <a-mixin id="privatebuilding2" scale="0.03 0.025 0.03" obj-model="obj: #privatebulding2Obj; mtl: #privatebuilding2Mtl"></a-mixin>
+      <a-mixin id="store" scale="0.03 0.025 0.03" obj-model="obj: #storeObj; mtl: #storeMtl"></a-mixin>
+      <a-mixin id="store2" scale="0.03 0.025 0.03" obj-model="obj: #store2Obj; mtl: #store2Mtl"></a-mixin>
+      <a-mixin id="street" scale="0.03 0.025 0.03" obj-model="obj: #streetObj; mtl: #streetMtl"></a-mixin>
+      <a-mixin id="street2" scale="0.03 0.025 0.03" obj-model="obj: #street2Obj; mtl: #street2Mtl"></a-mixin>
+      <a-mixin id="publicbuilding" scale="0.03 0.025 0.03" obj-model="obj: #publicbuildingObj; mtl: #publicbuildingMtl"></a-mixin>
       <a-mixin id="greenarea" geometry="primitive: plane" rotation="-90 0 0" material="color: #2a4"></a-mixin>
     </a-assets>
 
@@ -24,7 +56,7 @@
       vive-controls="hand: right"
       vive-cursor="objects: #floor, .placed-object, .imagegallery"
       vive-trackpad-controls
-      vive-object-palette="values: tree, greenarea; target: vive-place-objects/placedObjectMixin"
+      vive-object-palette="values: tree, greenarea, bench, footpath, parkingarea, privatebuilding, privatebuilding2, store, store2, publicbuilding, street, street2; target: vive-place-objects/placedObjectMixin"
       vive-place-objects="drawTarget: #floor; placedObjectContainer: #buildingview"
     ></a-entity>
 
