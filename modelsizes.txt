@@ -1,14 +1,71 @@
-mixin          sizeX              1/sizeX
-----------------------------------------------------
-greenarea      1                  1
-publicbuilding 1.1999999731779099 0.8333333519597852
-street         0.6599999852478504 1.5151515490177914
-street2        0.47999998927116394 2.083333379899463
-store2         0.5999999865889549 1.6666667039195704
-store          1.1999999731779099 0.8333333519597852
-parkingarea    0.2699999939650297 3.7037037864879343
-privatebuilding Infinity 0
-privatebuilding2 Infinity 0
-footpath       0.47999998927116394 2.083333379899463
-bench          0.09000000078231096 11.111111014529511
-tree           0.7499999832361937  1.333333363135656
+{ component: "greenarea",
+  xDiff: 1,
+  yDiff: 2.220446049250313e-16,
+  xDiffInverted: 1,
+  yDiffInverted: 4503599627370496 }
+
+{ component: "publicbuilding",
+  xDiff: 40,
+  yDiff: 24,
+  xDiffInverted: 0.025,
+  yDiffInverted: 0.041666666666666664 }
+
+{ component: "street",
+  xDiff: 22,
+  yDiff: 2,
+  xDiffInverted: 0.045454545454545456,
+  yDiffInverted: 0.5 }
+
+{ component: "street2",
+  xDiff: 16,
+  yDiff: 2,
+  xDiffInverted: 0.0625,
+  yDiffInverted: 0.5 }
+
+{ component: "store2",
+  xDiff: 20,
+  yDiff: 15,
+  xDiffInverted: 0.05,
+  yDiffInverted: 0.06666666666666667 }
+
+{ component: "store",
+  xDiff: 40,
+  yDiff: 15,
+  xDiffInverted: 0.025,
+  yDiffInverted: 0.06666666666666667 }
+
+{ component: "parkingarea",
+  xDiff: 9,
+  yDiff: 1,
+  xDiffInverted: 0.1111111111111111,
+  yDiffInverted: 1 }
+
+{ component: "privatebuilding",
+  xDiff: Infinity,
+  yDiff: Infinity,
+  xDiffInverted: 0,
+  yDiffInverted: 0 }
+
+{ component: "privatebuilding2",
+  xDiff: Infinity,
+  yDiff: Infinity,
+  xDiffInverted: 0,
+  yDiffInverted: 0 }
+
+{ component: "footpath",
+  xDiff: 16,
+  yDiff: 1,
+  xDiffInverted: 0.0625,
+  yDiffInverted: 1 }
+
+{ component: "bench",
+  xDiff: 30,
+  yDiff: 16,
+  xDiffInverted: 0.03333333333333333,
+  yDiffInverted: 0.0625 }
+
+{ component: "tree",
+  xDiff: 25,
+  yDiff: 40,
+  xDiffInverted: 0.04,
+  yDiffInverted: 0.025 }
