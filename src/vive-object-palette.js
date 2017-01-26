@@ -26,13 +26,25 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
 
   init () {
+    this.rotationMixins = ['rot0', 'rot90', 'rot180', 'rot270'];
+
+    // create the mixins for rotation values
+    const assets = document.querySelector('a-assets');
+    for (let mixin of this.rotationMixins) {
+      console.log(mixin)
+      let el = document.createElement('a-mixin');
+      el.setAttribute('id', mixin);
+      el.setAttribute('rotation', `0 ${mixin.replace(/\D/g,'')} 0`);
+      assets.appendChild(el)
+    }
     this.eventListeners = {
       'trackpad-button-down': this.onTrackpadButtonDown.bind(this),
       'trackpad-scroll': this.onTrackpadScroll.bind(this),
     };
   },
   update () {
-    this.i = 0; // current index
+    this.valIndex = 0; // current index
+    this.rotIndex = 0; // current rotation
     this.setTargetProperty();
   },
   play () { this.attachEventListeners(); },
@@ -50,24 +62,31 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
 
   onTrackpadButtonDown (ev) {
-    if (ev.detail.cardinal === 'right')     this.i++;
-    else if (ev.detail.cardinal === 'left') this.i--;
+    if (ev.detail.cardinal === 'right')     this.valIndex++;
+    else if (ev.detail.cardinal === 'left') this.valIndex--;
     this.setTargetProperty();
   },
 
   onTrackpadScroll (ev) {
-    if (ev.detail.direction === 'cw')       this.i++;
-    else if (ev.detail.direction === 'ccw') this.i--;
+    if (ev.detail.direction === 'cw') this.rotIndex--;
+    else if (ev.detail.direction === 'ccw') this.rotIndex++;
     this.setTargetProperty();
   },
 
   // sets the specified components' property
   // (and triggers update() there)
-  setTargetProperty (i = this.i) {
-    const vs = this.data.values;
+  setTargetProperty () {
     const t = this.data.target;
+
+    // get strings for value & rotation & join them
+    const mixinString = [
+      this.data.values[modulo(this.valIndex, this.data.values.length)],
+      this.rotationMixins[modulo(this.rotIndex, this.rotationMixins.length)]
+    ].join(' ');
+
+    // set the mixin string on the target
     this.el.setAttribute(t.component, {
-      [t.property]: vs[modulo(i, vs.length)]
+      [t.property]: mixinString
     });
   }
 });
