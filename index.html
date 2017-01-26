@@ -10,7 +10,8 @@
 <body>
   <a-scene fog="color: #8ad; far: 120; near: 70">
     <a-assets>
-      <a-asset-item id="buildings-data" src="models/buildings/1_SurroundingBuildings.dae">
+      <a-asset-item id="buildings-model" src="models/buildings/1_SurroundingBuildings.dae">
+      <a-asset-item id="planningarea-model" src="models/buildings/Area.dae">
       <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
       <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
       <a-asset-item id="benchObj" src="models/objects/bench.obj"></a-asset-item>
@@ -33,8 +34,8 @@
       <a-asset-item id="street2Mtl" src="models/objects/street2.mtl"></a-asset-item>
       <a-asset-item id="publicbuildingObj" src="models/objects/publicbuilding.obj"></a-asset-item>
       <a-asset-item id="publicbuildingMtl" src="models/objects/publicbuilding.mtl"></a-asset-item>
-     
-      
+
+
 
       <a-mixin id="tree" scale="0.03 0.025 0.03" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
       <a-mixin id="bench" scale="0.003 0.0025 0.003" obj-model="obj: #benchObj; mtl: #benchMtl"></a-mixin>
@@ -54,16 +55,16 @@
     <a-entity id="teleport-ctrl" toggle-views teleport-controls="curveShootingSpeed: 10" vive-controls="hand: left"></a-entity>
     <a-entity id="cursor-ctrl"
       vive-controls="hand: right"
-      vive-cursor="objects: #floor, .placed-object, .imagegallery"
       vive-trackpad-controls
       vive-object-palette="values: tree, greenarea, bench, footpath, parkingarea, privatebuilding, privatebuilding2, store, store2, publicbuilding, street, street2; target: vive-place-objects/placedObjectMixin"
-      vive-place-objects="drawTarget: #floor; placedObjectContainer: #buildingview"
+      vive-place-objects="drawTarget: #planningarea; placedObjectContainer: #buildingview"
     ></a-entity>
 
     <!-- buildingview -->
     <a-entity id="buildingview" visible="true" gridhelper="size: 80; divisions: 320; colorGrid: #666; colorCenterLine: #666">
-      <a-collada-model id="buildings" src="#buildings-data" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
-      <a-entity id="floor" geometry="primitive: plane" material="color: #aaa" rotation="-90 0 0" position="0 -0.001 0" scale="180 180 180"></a-entity>
+      <a-collada-model id="planningarea" src="#planningarea-model" scale="-0.3 -0.001 0.3" rotation="0 -11.52 0" position="8.39 0 -9.37" material="color: red"></a-collada-model>
+      <a-collada-model id="buildings" src="#buildings-model" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
+      <a-entity id="floor" geometry="primitive: plane" material="color: #333" rotation="-90 0 0" position="0 -0.002 0" scale="180 180 180"></a-entity>
       <a-sky color="#66f"></a-sky>
     </a-entity>
 

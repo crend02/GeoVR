@@ -13,3 +13,11 @@ import viveObjectPalette from './vive-object-palette';
 if (process.env.NODE_ENV !== 'production') {
   require('../index.html')
 }
+
+// hacky hack. can't attach raycaster to collada-model which isnt loaded yet
+setTimeout(function() {
+  document.getElementById('cursor-ctrl').setAttribute(
+    'vive-cursor',
+    'objects: #planningarea, .placed-object, .imagegallery'
+  );
+}, (2000));
