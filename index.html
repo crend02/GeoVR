@@ -33,8 +33,9 @@
       <a-asset-item id="street2Mtl" src="models/objects/street2.mtl"></a-asset-item>
       <a-asset-item id="publicbuildingObj" src="models/objects/publicbuilding.obj"></a-asset-item>
       <a-asset-item id="publicbuildingMtl" src="models/objects/publicbuilding.mtl"></a-asset-item>
-      
-      
+      <a-asset-item id="greenareaObj" src="models/objects/greenarea_small.obj"></a-asset-item>
+      <a-asset-item id="greenareaMtl" src="models/objects/greenarea_small.mtl"></a-asset-item>
+
 
       <a-mixin id="tree" scale="0.04 0.04 0.04" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
       <a-mixin id="bench" scale="0.0625 0.0625 0.0625" obj-model="obj: #benchObj; mtl: #benchMtl"></a-mixin>
@@ -47,7 +48,7 @@
       <a-mixin id="street" scale="0.045454545454545456 0.045454545454545456 0.045454545454545456" obj-model="obj: #streetObj; mtl: #streetMtl"></a-mixin>
       <a-mixin id="street2" scale="0.0625 0.0625 0.0625" obj-model="obj: #street2Obj; mtl: #street2Mtl"></a-mixin>
       <a-mixin id="publicbuilding" scale="0.025 0.025 0.025" obj-model="obj: #publicbuildingObj; mtl: #publicbuildingMtl"></a-mixin>
-      <a-mixin id="greenarea" geometry="primitive: plane" rotation="-90 0 0" material="color: #2a4"></a-mixin>
+      <a-mixin id="greenarea" scale="0.076923076 0.076923076 0.076923076" obj-model="obj: #greenareaObj; mtl: #greenareaMtl"></a-mixin>
     </a-assets>
 
     <!-- controllers. left hand has teleport, right hand has cursor -->
