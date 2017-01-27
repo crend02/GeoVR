@@ -10,12 +10,14 @@
 <body>
   <a-scene fog="color: #8ad; far: 120; near: 70">
     <a-assets>
-      <a-asset-item id="buildings-data" src="models/buildings/1_SurroundingBuildings.dae">
+      <a-asset-item id="buildings-data" src="models/buildings/1_SurroundingBuildings.dae"></a-asset-item>
       <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
       <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
 
       <a-mixin id="tree" scale="0.03 0.025 0.03" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
-      <a-mixin id="greenarea" geometry="primitive: plane" rotation="-90 0 0" material="color: #2a4"></a-mixin>
+      <a-mixin id="greenarea">
+        <a-entity geometry="primitive: plane" rotation="-90 0 0" material="color: #2a4"></a-entity>
+      </a-mixin>
     </a-assets>
 
     <!-- controllers. left hand has teleport, right hand has cursor -->

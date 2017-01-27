@@ -123,16 +123,15 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       this.placeObject(this.drawTargetIntersection);
 
     // lower trackpad deletes currently dragged object
-    else if (ev.detail.cardinal === 'down' && this.el.is(STATES.DRAWING))
+    else if (ev.detail.cardinal === 'down' && this.el.is(STATES.DRAGGING))
       this.dragEl.parentElement.removeChild(this.dragEl);
 
     // upper trackpad enables drawing mode
-    else if (ev.detail.cardinal === 'up') this.el.addState(STATES.DRAWING);
-    this.previewEl.setAttribute('visible', 'true');
+    else if (ev.detail.cardinal === 'up')
+      this.el.addState(STATES.DRAWING);
   },
   onTrackPadUp (ev) {
     this.el.removeState(STATES.DRAWING);
-    this.previewEl.setAttribute('visible', 'false');
   },
 
   placeObject (point) {
