@@ -33,7 +33,10 @@
       <a-asset-item id="street2Mtl" src="models/objects/street2.mtl"></a-asset-item>
       <a-asset-item id="publicbuildingObj" src="models/objects/publicbuilding.obj"></a-asset-item>
       <a-asset-item id="publicbuildingMtl" src="models/objects/publicbuilding.mtl"></a-asset-item>
+      <a-asset-item id="greenareaObj" src="models/objects/greenarea_small.obj"></a-asset-item>
+      <a-asset-item id="greenareaMtl" src="models/objects/greenarea_small.mtl"></a-asset-item>
 
+      <a-mixin id="greenarea" scale="1 1 1" obj-model="obj: #greenareaObj; mtl: #greenareaMtl"></a-mixin>
 
 
       <a-mixin id="tree" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
@@ -47,7 +50,6 @@
       <a-mixin id="street" obj-model="obj: #streetObj; mtl: #streetMtl"></a-mixin>
       <a-mixin id="street2" obj-model="obj: #street2Obj; mtl: #street2Mtl"></a-mixin>
       <a-mixin id="publicbuilding" obj-model="obj: #publicbuildingObj; mtl: #publicbuildingMtl"></a-mixin>
-      <a-mixin id="greenarea" geometry="primitive: plane" rotation="-90 0 0" material="color: #2a4"></a-mixin>
     </a-assets>
 
     <a-entity mixin="greenarea" getsize="greenarea"></a-entity>
