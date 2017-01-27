@@ -118,13 +118,15 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
 
   onTrackPadDown (ev) {
-    // lower trackpad places a object
-    if (ev.detail.cardinal === 'down' && this.drawTargetIntersection)
-      this.placeObject(this.drawTargetIntersection);
-
     // lower trackpad deletes currently dragged object
-    else if (ev.detail.cardinal === 'down' && this.el.is(STATES.DRAGGING))
+    if (ev.detail.cardinal === 'down' && this.el.is(STATES.DRAGGING)) {
       this.dragEl.parentElement.removeChild(this.dragEl);
+      this.dragEl = null;
+    }
+
+    // lower trackpad places a object
+    else if (ev.detail.cardinal === 'down' && this.drawTargetIntersection)
+      this.placeObject(this.drawTargetIntersection);
 
     // upper trackpad enables drawing mode
     else if (ev.detail.cardinal === 'up')
