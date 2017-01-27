@@ -1,63 +1,111 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Hello, World! - A-Frame</title>
-    <meta name="description" content="Hello, World! - A-Frame">
-    <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
-    <!-- vive cursor -->
-    <script src="https://rawgit.com/bryik/aframe-vive-cursor-component/master/dist/aframe-vive-cursor-component.min.js"></script>
-    <!-- vive teleport -->
-    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
-    <!-- several components. layout! -->
-    <script src="https://rawgit.com/ngokevin/kframe/master/dist/kframe.min.js"></script>
-    <!-- text rendering -->
-    <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>geovr-urban-planning</title>
+  <script src="/dist/build.js"></script>
   </head>
-  <body>
-    <a-scene id="scene">
 
-      <a-assets>
-        <a-mixin id="hud-btn"
-          rotation="-90 0 0"
-          material="shader: flat; color: #30b4aa"
-        ></a-mixin>
-      </a-assets>
+<body>
+  <a-scene fog="color: #8ad; far: 120; near: 70">
+    <a-assets>
+      <a-asset-item id="buildings-model" src="models/buildings/1_SurroundingBuildings.dae"></a-asset-item>
+      <a-asset-item id="planningarea-model" src="models/buildings/Area.dae"></a-asset-item>
+      <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
+      <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
+      <a-asset-item id="benchObj" src="models/objects/bench.obj"></a-asset-item>
+      <a-asset-item id="benchMtl" src="models/objects/bench.mtl"></a-asset-item>
+      <a-asset-item id="footpathObj" src="models/objects/footpath.obj"></a-asset-item>
+      <a-asset-item id="footpathMtl" src="models/objects/footpath.mtl"></a-asset-item>
+      <a-asset-item id="parkingareaObj" src="models/objects/parkingarea.obj"></a-asset-item>
+      <a-asset-item id="parikingareaMtl" src="models/objects/parkingarea.mtl"></a-asset-item>
+      <a-asset-item id="privatebuildingObj" src="models/objects/privatebuilding.obj"></a-asset-item>
+      <a-asset-item id="privatebuildingMtl" src="models/objects/privatebuilding.mtl"></a-asset-item>
+      <a-asset-item id="privatebuilding2Obj" src="models/objects/privatebuilding2.obj"></a-asset-item>
+      <a-asset-item id="privatebuilding2Mtl" src="models/objects/privatebuilding2.mtl"></a-asset-item>
+      <a-asset-item id="storeObj" src="models/objects/store.obj"></a-asset-item>
+      <a-asset-item id="storeMtl" src="models/objects/store.mtl"></a-asset-item>
+      <a-asset-item id="store2Obj" src="models/objects/store2.obj"></a-asset-item>
+      <a-asset-item id="store2Mtl" src="models/objects/store2.mtl"></a-asset-item>
+      <a-asset-item id="streetObj" src="models/objects/street.obj"></a-asset-item>
+      <a-asset-item id="streetMtl" src="models/objects/street.mtl"></a-asset-item>
+      <a-asset-item id="street2Obj" src="models/objects/street2.obj"></a-asset-item>
+      <a-asset-item id="street2Mtl" src="models/objects/street2.mtl"></a-asset-item>
+      <a-asset-item id="publicbuildingObj" src="models/objects/publicbuilding.obj"></a-asset-item>
+      <a-asset-item id="publicbuildingMtl" src="models/objects/publicbuilding.mtl"></a-asset-item>
+      <a-asset-item id="greenareaObj" src="models/objects/greenarea_small.obj"></a-asset-item>
+      <a-asset-item id="greenareaMtl" src="models/objects/greenarea_small.mtl"></a-asset-item>
 
-      <!-- camera -->
-      <a-entity position="0 0 2.5">
-        
-        <a-entity camera="user-height: 1.7" wasd-controls look-controls>
-          <!-- controllers. left hand has teleport, right hand has cursor -->
-          <a-entity
-            vive-controls="left"
-            hand-controls
-          ></a-entity>
-          <a-entity id="cursor"
-            hand-controls="right"
-            vive-cursor
-          ></a-entity>
-          
-          <!-- action selector HUD -->
-          <!-- TODO: always render on top? https://github.com/mrdoob/three.js/issues/1959 -->
-          <a-entity layout="type: circle; radius: 1.2" rotation="90 0 0" position="0 -2 -2">
-            <a-plane mixin="hud-btn" bmfont-text="text: asdf;"></a-plane>
-            <a-plane mixin="hud-btn"></a-plane>
-            <a-plane mixin="hud-btn"></a-plane>
-            <a-plane mixin="hud-btn"></a-plane>
-            <a-plane mixin="hud-btn"></a-plane>
-            <a-plane mixin="hud-btn"></a-plane>
-          </a-entity>
-        </a-entity>
+      <a-mixin id="tree" scale="0.04 0.04 0.04" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
+      <a-mixin id="bench" scale="0.0625 0.0625 0.0625" obj-model="obj: #benchObj; mtl: #benchMtl"></a-mixin>
+      <a-mixin id="footpath" scale="0.3333333333333333 0.3333333333333333 0.3333333333333333" obj-model="obj: #footpathObj; mtl: #footpathMtl"></a-mixin>
+      <a-mixin id="parkingarea" scale="0.1111111111111111 0.1111111111111111 0.1111111111111111" obj-model="obj: #parkingareaObj; mtl: #parkingareaMtl"></a-mixin>
+      <a-mixin id="privatebuilding" scale="0.02564102564102564 0.02564102564102564 0.02564102564102564" obj-model="obj: #privatebuildingObj; mtl: #privatebuildingMtl"></a-mixin>
+      <a-mixin id="privatebuilding2" scale="0.025 0.025 0.025" obj-model="obj: #privatebuilding2Obj; mtl: #privatebuilding2Mtl"></a-mixin>
+      <a-mixin id="store" scale="0.025 0.025 0.025" obj-model="obj: #storeObj; mtl: #storeMtl"></a-mixin>
+      <a-mixin id="store2" scale="0.05 0.05 0.05" obj-model="obj: #store2Obj; mtl: #store2Mtl"></a-mixin>
+      <a-mixin id="street" scale="0.045454545454545456 0.045454545454545456 0.045454545454545456" obj-model="obj: #streetObj; mtl: #streetMtl"></a-mixin>
+      <a-mixin id="street2" scale="0.0625 0.0625 0.0625" obj-model="obj: #street2Obj; mtl: #street2Mtl"></a-mixin>
+      <a-mixin id="publicbuilding" scale="0.025 0.025 0.025" obj-model="obj: #publicbuildingObj; mtl: #publicbuildingMtl"></a-mixin>
+      <a-mixin id="greenarea" scale="0.076923076 0.076923076 0.076923076" obj-model="obj: #greenareaObj; mtl: #greenareaMtl"></a-mixin>
+    </a-assets>
+
+    <!-- controllers. left hand has teleport, right hand has cursor -->
+    <a-entity id="teleport-ctrl" toggle-views teleport-controls="curveShootingSpeed: 10" vive-controls="hand: left"></a-entity>
+    <a-entity id="cursor-ctrl"
+      vive-controls="hand: right"
+      vive-trackpad-controls
+      vive-object-palette="values: tree, greenarea, bench, footpath, parkingarea, privatebuilding, privatebuilding2, store, store2, publicbuilding, street, street2; target: vive-place-objects/placedObjectMixin"
+      vive-place-objects="drawTarget: #planningarea; placedObjectContainer: #buildingview"
+    ></a-entity>
+
+    <!-- buildingview -->
+    <a-entity id="buildingview" visible="true" gridhelper="size: 80; divisions: 320; colorGrid: #666; colorCenterLine: #666">
+      <a-collada-model id="planningarea" src="#planningarea-model" scale="-0.3 -0.001 0.3" rotation="0 -11.52 0" position="8.39 0 -9.37" material="color: red"></a-collada-model>
+      <a-collada-model id="buildings" src="#buildings-model" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
+      <a-entity id="floor" geometry="primitive: plane" material="color: #333" rotation="-90 0 0" position="0 -0.002 0" scale="180 180 180"></a-entity>
+      <a-sky color="#66f"></a-sky>
+    </a-entity>
+
+    <!-- imagetour -->
+    <a-entity id="imageview" visible="false">
+      <a-entity class="imagegallery" id="images_start" visible="true" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="rm" color="#88E28C" radius="0.2" position="0.53 1 -7.33" set-sky="/images/right_middle.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-5.37 1 -3.35" set-sky="/images/left_front.jpg"></a-sphere>
       </a-entity>
-
-      <!-- demo objects -->
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" look-at="[camera]"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" ></a-plane>
-
-      <a-sky color="#ECECFF"></a-sky>
-    </a-scene>
-  </body>
+      <a-entity class="imagegallery" id="images_2" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="rb" color="#88E28C" radius="0.2" position="4.53 1 -5.04" set-sky="/images/right_back.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-4 0.61 -5.50" set-sky="/images/middle_center.jpg"></a-sphere>
+        <a-sphere id="rf" color="#88E28C" radius="0.2" position="-6.51 1   4.54" set-sky="/images/right_front.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_3" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="cb" color="#88E28C" radius="0.2" position="-4.15 1 -5.35" set-sky="/images/center_back.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-5.89 1 5.41" set-sky="/images/right_middle.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_4" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="rb" color="#88E28C" radius="0.2" position="2 1 -7.16" set-sky="/images/right_back.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-2.77 1 4.34" set-sky="/images/left_back.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_5" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="cb" color="#88E28C" radius="0.2" position="1.91 1 -3.70" set-sky="/images/center_back.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="-1.76 1 3.82" set-sky="/images/middle_left.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_6" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="lb" color="#88E28C" radius="0.2" position="-3 1 3.71" set-sky="/images/left_back.jpg"></a-sphere>
+        <a-sphere id="mc" color="#88E28C" radius="0.2" position="-6 1 -1.70" set-sky="/images/middle_center.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="1.96 1 -4.69" set-sky="/images/left_front.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_7" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere id="rm" color="#88E28C" radius="0.2" position="-1.76 1 3.82" set-sky="/images/right_middle.jpg"></a-sphere>
+        <a-sphere color="#88E28C" radius="0.2" position="0.53 1 -7.33" set-sky="/images/middle_left.jpg"></a-sphere>
+      </a-entity>
+      <a-entity class="imagegallery" id="images_8" visible="false" layout="type: circle; radius: 2" rotation="0 90 0" position="1 0.8 -1">
+        <a-sphere color="#88E28C" radius="0.2" position="2.24 1 -5" set-sky="/images/middle_left.jpg"></a-sphere>
+        <a-sphere id="rf" color="#88E28C" radius="0.2" position="4.25 1 3.95" set-sky="/images/right_front.jpg"></a-sphere>
+      </a-entity>
+      <a-sky id="image-sky" opacity="1" radius="70" src="/images/right_front.jpg"></a-sky>
+    </a-entity>
+  </a-scene>
+</body>
 </html>
