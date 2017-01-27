@@ -8,20 +8,16 @@ AFRAME.registerComponent('getsize', {
     // timeout required for the models to be loaded
     setTimeout(() => {
       const bbox = new THREE.Box3().setFromObject(this.el.object3D);
-      const xDiff = Math.abs(bbox.min.x) + Math.abs(bbox.max.x);
-      const yDiff = Math.abs(bbox.min.y) + Math.abs(bbox.max.y);
-      const zDiff = Math.abs(bbox.min.z) + Math.abs(bbox.max.z);
+      const x = Math.abs(bbox.max.x - bbox.min.x);
+      const y = Math.abs(bbox.max.y - bbox.min.y);
+      const z = Math.abs(bbox.max.z - bbox.min.z);
       const stats = {
         component: this.data,
-        size: {
-          x: xDiff,
-          y: yDiff,
-          z: zDiff
-        },
+        size: { x, y, z },
         scale: {
-          x: 1 / xDiff,
-          y: 1 / yDiff,
-          z: 1 / zDiff
+          x: 1 / x,
+          y: 1 / y,
+          z: 1 / z
         }
       };
       // use size of shortest edge for scaling, so the shortest edge is always 1
