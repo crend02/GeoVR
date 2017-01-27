@@ -12,7 +12,6 @@ import { snapToGrid } from './helpers.js'
 
 const COMPONENT_NAME = 'vive-place-objects';
 const STATES = {
-  PLACING: COMPONENT_NAME + '_placing',
   DRAWING: COMPONENT_NAME + '_drawing',
   DRAGGING: COMPONENT_NAME + '_dragging'
 };
@@ -59,15 +58,14 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       if (this.data.placedObjectMixin)
         this.previewEl.setAttribute('mixin', this.data.placedObjectMixin);
       // reset material, so preview separates from the actual entity
-      this.previewEl.setAttribute('material', 'color: #888');
-      this.previewEl.setAttribute('obj-model', { mtl: null });
+      this.previewEl.setAttribute('material', 'opacity: 0.5; transparent: true');
       this.previewEl.setAttribute('id', COMPONENT_NAME + '-preview');
 
       // hide the preview. if its recreated wait a bit to give feedback
       if (this.previewTimeout) clearTimeout(this.previewTimeout);
       this.previewTimeout = setTimeout(() => {
-        if (!this.el.is(STATES.PLACING)) this.previewEl.setAttribute('visible', false);
-      }, !this.previewEl ? 0 : 666);
+        this.previewEl.setAttribute('visible', false);
+      }, !this.previewEl ? 0 : 1500);
     }
 
     // (re)attach the listeners, when drawtarget or objectclass changed
@@ -110,29 +108,32 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
   // trigger down while pointing at placed object enables dragging mode
   onDragTargetTriggerDown (ev) {
-    if (this.el.is(STATES.PLACING)) return; // can't drag while placing
     this.el.addState(STATES.DRAGGING);
     this.dragEl = ev.target;
   },
-  // trigger up places object in placing mode, disables dragging mode
+  // trigger up disables dragging mode
   onTriggerUp (ev) {
-    if (this.el.is(STATES.PLACING) && this.drawTargetIntersection)
-      this.placeObject(this.drawTargetIntersection);
     this.el.removeState(STATES.DRAGGING);
     this.dragEl = null;
   },
 
   onTrackPadDown (ev) {
-    // lower trackpad enables placing mode
-    if (ev.detail.cardinal === 'down') this.el.addState(STATES.PLACING);
+    // lower trackpad deletes currently dragged object
+    if (ev.detail.cardinal === 'down' && this.el.is(STATES.DRAGGING)) {
+      this.dragEl.parentElement.removeChild(this.dragEl);
+      this.dragEl = null;
+    }
+
+    // lower trackpad places a object
+    else if (ev.detail.cardinal === 'down' && this.drawTargetIntersection)
+      this.placeObject(this.drawTargetIntersection);
+
     // upper trackpad enables drawing mode
-    else if (ev.detail.cardinal === 'up') this.el.addState(STATES.DRAWING);
-    this.previewEl.setAttribute('visible', 'true');
+    else if (ev.detail.cardinal === 'up')
+      this.el.addState(STATES.DRAWING);
   },
   onTrackPadUp (ev) {
-    this.el.removeState(STATES.PLACING);
     this.el.removeState(STATES.DRAWING);
-    this.previewEl.setAttribute('visible', 'false');
   },
 
   placeObject (point) {
