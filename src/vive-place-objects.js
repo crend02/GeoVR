@@ -9,6 +9,7 @@
 
 import AFRAME from './aframe-master.js'
 import { snapToGrid } from './helpers.js'
+import { insertQTree, removeFromQTree, updateQTree, checkQTree} from './qtree.js'
 
 var QuadTree = require('simple-quadtree');
 var qt = QuadTree(-75, -50, 150, 150);
@@ -152,48 +153,17 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
 
   updateTargetPosition(point) {
-    let el;
-    if (this.el.is(STATES.DRAWING)) this.placeObject(point);
+    let el
+    if (this.el.is(STATES.DRAWING)){
+      intersectObj = checkQTree(this.previewEl, point);
+      console.log("intersecting Objects: "+ intersectObj);
+      this.placeObject(point);
+    } 
     if (this.el.is(STATES.DRAGGING)) el = this.dragEl;
     if (!el) el = this.previewEl;
 
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
     point.y += 0.001; // avoid z-fighting
     el.setAttribute('position', point);
-  },
-
-  //insert object into qtree
-  insertQTree(element, point) {
-    size = getsize(element);
-    qt.put({'x' : point.x, 'y' : point.z, 'w': size.x, 'h': size.z, 'string': element});
-    console.log("Qtree:" + qtree);
-  },
-
-  //delete an object from qtree
-  deleteFromQTree(element, point) {
-    size = getsize(element);
-    qt.remove({'x' : point.x, 'y' : point.z, 'w': size.x, 'h': size.z, 'string': element});
-  },
-
-  //update an object in the qtree
-  updateQTree(element, oldpoint, newpoint) {
-    size = getsize(element);
-    result = qt.update({'x' : oldpoint.x, 'y' : oldpoint.z, 'w': size.x, 'h': size.z, 'string': element},{'x' : newpoint.x, 'y' : newpoint.z});
-    console.log("update object: "+ result);
-  },
-
-  //check for elements at a certain position
-  // return an array of matching objects
-  checkQTree(element, point) {
-    size = getsize(element);
-    result = qt.get({'x' : point.x, 'y' : point.z, 'w': size.x, 'h': size.z})
-    return result;
-  },
-
-  getsize(element) {
-    bbox = new THREE.Box3().setFromObject(element.object3D);
-    width = Math.abs(bbox.max.x - bbox.min.x);
-    depth = Math.abs(bbox.max.z - bbox.min.z);
-    return { 'x': width, 'z': depth };
   }
 });
