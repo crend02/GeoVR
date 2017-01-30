@@ -11,6 +11,7 @@ import AFRAME from './aframe-master.js'
 import { snapToGrid } from './helpers.js'
 import { insertQTree, removeFromQTree, updateQTree, checkQTree} from './qtree.js'
 
+import QuadTree from 'simple-quadtree';
 var qt = QuadTree(-75, -50, 150, 150);
 
 const COMPONENT_NAME = 'vive-place-objects';
