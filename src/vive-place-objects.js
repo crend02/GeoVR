@@ -10,6 +10,9 @@
 import AFRAME from './aframe-master.js'
 import { snapToGrid } from './helpers.js'
 
+var QuadTree = require('simple-quadtree');
+var qt = QuadTree(-75, -50, 150, 150);
+
 const COMPONENT_NAME = 'vive-place-objects';
 const STATES = {
   PLACING: COMPONENT_NAME + '_placing',
@@ -27,7 +30,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     snapToGrid: { default: 1 }, // 0 = disabled, other numbers define grid size
   },
 
-  init () {
+  init() {
     this.dragEl = null; // reference to the object we're currently dragging
     this.previewEl = null; // reference to the preview entity
     this.previewTimeout = null; // timeoutId for preview of new object
@@ -45,7 +48,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
 
   // aframe lifecycle hook: called when component attributes have been changed
-  update (oldData) {
+  update(oldData) {
     // abort, if we dont know where to draw on
     if (!this.data.drawTarget)
       return console.error(`[${COMPONENT_NAME}] no valid draw target defined!`);
@@ -77,19 +80,19 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     }
   },
 
-  remove () {
+  remove() {
     this.removeEventListeners();
     this.el.sceneEl.removeChild(this.previewEl);
   },
 
-  attachEventListeners () {
+  attachEventListeners() {
     for (const event in this.eventListeners)
       this.el.addEventListener(event, this.eventListeners[event]);
     for (const el of document.querySelectorAll('.' + this.placedObjectClass))
       el.addEventListener('mousedown', this.onDragTargetTriggerDown);
   },
 
-  removeEventListeners (placedObjectClass = this.data.placedObjectClass) {
+  removeEventListeners(placedObjectClass = this.data.placedObjectClass) {
     for (const event in this.eventListeners)
       this.el.removeEventListener(event, this.eventListeners[event]);
     for (const el of document.querySelectorAll('.' + placedObjectClass))
@@ -97,7 +100,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
 
   // check if cursor intersects with the drawTarget and update intersection point
-  onIntersection (ev) {
+  onIntersection(ev) {
     this.drawTargetIntersection = null;
     for (let i = 0; i < ev.detail.els.length; i++) {
       if (ev.detail.els[i] === this.data.drawTarget) {
@@ -109,33 +112,33 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
 
   // trigger down while pointing at placed object enables dragging mode
-  onDragTargetTriggerDown (ev) {
+  onDragTargetTriggerDown(ev) {
     if (this.el.is(STATES.PLACING)) return; // can't drag while placing
     this.el.addState(STATES.DRAGGING);
     this.dragEl = ev.target;
   },
   // trigger up places object in placing mode, disables dragging mode
-  onTriggerUp (ev) {
+  onTriggerUp(ev) {
     if (this.el.is(STATES.PLACING) && this.drawTargetIntersection)
       this.placeObject(this.drawTargetIntersection);
     this.el.removeState(STATES.DRAGGING);
     this.dragEl = null;
   },
 
-  onTrackPadDown (ev) {
+  onTrackPadDown(ev) {
     // lower trackpad enables placing mode
     if (ev.detail.cardinal === 'down') this.el.addState(STATES.PLACING);
     // upper trackpad enables drawing mode
     else if (ev.detail.cardinal === 'up') this.el.addState(STATES.DRAWING);
     this.previewEl.setAttribute('visible', 'true');
   },
-  onTrackPadUp (ev) {
+  onTrackPadUp(ev) {
     this.el.removeState(STATES.PLACING);
     this.el.removeState(STATES.DRAWING);
     this.previewEl.setAttribute('visible', 'false');
   },
 
-  placeObject (point) {
+  placeObject(point) {
     // create a new element with the current pointer position & add it to the scene
     const newElement = document.createElement('a-entity');
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
@@ -145,9 +148,10 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     newElement.classList.add(this.data.placedObjectClass);
     this.data.placedObjectContainer.appendChild(newElement);
     newElement.addEventListener('mousedown', this.onDragTargetTriggerDown);
+    insertQTree(newElement, point);
   },
 
-  updateTargetPosition (point) {
+  updateTargetPosition(point) {
     let el;
     if (this.el.is(STATES.DRAWING)) this.placeObject(point);
     if (this.el.is(STATES.DRAGGING)) el = this.dragEl;
@@ -156,5 +160,40 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
     point.y += 0.001; // avoid z-fighting
     el.setAttribute('position', point);
+  },
+
+  //insert object into qtree
+  insertQTree(element, point) {
+    size = getsize(element);
+    qt.put({'x' : point.x, 'y' : point.z, 'w': size.x, 'h': size.z, 'string': element});
+    console.log("Qtree:" + qtree);
+  },
+
+  //delete an object from qtree
+  deleteFromQTree(element, point) {
+    size = getsize(element);
+    qt.remove({'x' : point.x, 'y' : point.z, 'w': size.x, 'h': size.z, 'string': element});
+  },
+
+  //update an object in the qtree
+  updateQTree(element, oldpoint, newpoint) {
+    size = getsize(element);
+    result = qt.update({'x' : oldpoint.x, 'y' : oldpoint.z, 'w': size.x, 'h': size.z, 'string': element},{'x' : newpoint.x, 'y' : newpoint.z});
+    console.log("update object: "+ result);
+  },
+
+  //check for elements at a certain position
+  // return an array of matching objects
+  checkQTree(element, point) {
+    size = getsize(element);
+    result = qt.get({'x' : point.x, 'y' : point.z, 'w': size.x, 'h': size.z})
+    return result;
+  },
+
+  getsize(element) {
+    bbox = new THREE.Box3().setFromObject(element.object3D);
+    width = Math.abs(bbox.max.x - bbox.min.x);
+    depth = Math.abs(bbox.max.z - bbox.min.z);
+    return { 'x': width, 'z': depth };
   }
 });
