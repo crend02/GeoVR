@@ -158,8 +158,15 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     let el
     let intersectObj = checkQTree(qt, this.previewEl, point);
     console.log("intersecting Objects: " + intersectObj);
-    if (this.el.is(STATES.DRAWING)) {
-      this.placeObject(point);
+    if (intersectObj == "") {
+      if (this.el.is(STATES.DRAWING)) {
+        this.placeObject(point);
+      }
+    }
+    else
+    {
+      // todo: make preview red
+      console.log("error in placing an object, because there is already one");
     }
     if (this.el.is(STATES.DRAGGING)) el = this.dragEl;
     if (!el) el = this.previewEl;
