@@ -13,13 +13,6 @@ export function removeFromQTree(qt, element, point) {
     qt.remove({ 'x': point.x, 'y': point.z, 'w': size.x, 'h': size.z, 'string': element });
 }
 
-//update an object in the qtree
-export function updateQTree(qt, element, oldpoint, newpoint) {
-    let size = getsize(element);
-    let result = qt.update({ 'x': oldpoint.x, 'y': oldpoint.z, 'w': size.x, 'h': size.z, 'string': element }, { 'x': newpoint.x, 'y': newpoint.z });
-    console.log("update object: " + result);
-}
-
 //check for elements at a certain position
 // returns an array of matching objects
 export function checkQTree(qt, element, point) {

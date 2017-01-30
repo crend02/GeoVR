@@ -9,7 +9,7 @@
 
 import AFRAME from './aframe-master.js'
 import { snapToGrid } from './helpers.js'
-import { insertQTree, removeFromQTree, updateQTree, checkQTree } from './qtree.js'
+import { insertQTree, removeFromQTree, checkQTree } from './qtree.js'
 
 import QuadTree from 'simple-quadtree';
 var qt = QuadTree(-75, -50, 150, 150);
@@ -126,6 +126,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     if (ev.detail.cardinal === 'down' && this.el.is(STATES.DRAGGING)) {
       this.dragEl.parentElement.removeChild(this.dragEl);
       this.dragEl = null;
+      // delete object also from qtree
+      //removeFromQTree(qt, this.dragEl, )
+
     }
 
     // lower trackpad places a object
@@ -158,10 +161,8 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     let el
     let intersectObj = checkQTree(qt, this.previewEl, point);
     console.log("intersecting Objects: " + intersectObj);
-    if (intersectObj == "") {
-      if (this.el.is(STATES.DRAWING)) {
+    if (intersectObj == "" && this.el.is(STATES.DRAWING)) {
         this.placeObject(point);
-      }
     }
     else
     {
@@ -170,7 +171,6 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     }
     if (this.el.is(STATES.DRAGGING)) el = this.dragEl;
     if (!el) el = this.previewEl;
-
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
     point.y += 0.001; // avoid z-fighting
     el.setAttribute('position', point);
