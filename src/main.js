@@ -13,3 +13,6 @@ import viveObjectPalette from './vive-object-palette';
 if (process.env.NODE_ENV !== 'production') {
   require('../index.html')
 }
+
+
+import QuadTree from 'simple-quadtree';
