@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+ <asset>
+ </asset>
+<library_effects>
+	<effect id="effect_c5c2c6">
+		<profile_COMMON>
+			<technique sid="phong1">
+				<phong>
+					<diffuse>
+						<color>0.7725490196078432 0.7607843137254902 0.7764705882352941 1.0</color>
+					</diffuse>
+					<transparency>
+						<float>1</float>
+					</transparency>
+				</phong>
+			</technique>
+		</profile_COMMON>
+	</effect>
+</library_effects>
+<library_materials>
+		<material id="material_c5c2c6">
+			<instance_effect url="#effect_c5c2c6"/>
+		</material> 
+</library_materials>
+<library_geometries>
+	<geometry id="geometry_1" name="object">
+		<mesh>
+			<source id="position_1">
+				<float_array id="position_array_1" count="93">
+			-36.296474285 0 -31.567106364
+			-40.9362891753 0 -6.73725233694
+			-41.0466021128 0 -2.17516488536
+			-41.5471672763 0 1.30374506191
+			-6.50245606592 0 7.57190450337
+			-10.6554776238 0 29.4768890408
+			-1.61037377534 0 31.1968559706
+			10.0293758698 0 33.2934646212
+			9.34435821486 0 38.1400233018
+			20.5621967776 0 40.2728564204
+			20.2515209058 0 33.9059177911
+			22.1938185824 0 34.4598807525
+			22.9557327486 0 29.0454345451
+			24.2179257013 0 21.062371803
+			-34.8781299114 0 -39.1573410152
+			24.5254569765 0 19.1173114542
+			25.1893049584 0 18.146706079
+			29.6038737237 0 18.9190782053
+			29.9966134944 0 16.688411218
+			30.5547240514 0 13.4775220485
+			27.0097435743 0 12.6134578926
+			27.334372509 0 10.7947421464
+			27.8995349209 0 7.64980860667
+			32.7030342072 0 -18.9499349987
+			37.3202297767 0 -18.5683929878
+			40.9124948997 0 -35.5534976152
+			8.58358209535 0 -36.3168915238
+			3.47772663529 0 -36.6468007854
+			-0.690913068536 0 -36.8808348718
+			-19.638414121 0 -38.7517498081
+			-30.5096873784 0 -40.0883430199
+				</float_array>
+				<technique_common>
+					<accessor source="#position_array_1" count="87" stride="3">
+						<param name="X" type="float" />
+						<param name="Y" type="float" />
+						<param name="Z" type="float" />
+					</accessor>
+				</technique_common>
+			</source>
+			<source id="normal_1">
+				<float_array id="normal_array_1" count="87">
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+			0 1 0
+				</float_array>
+				<technique_common>
+					<accessor source="#normal_array_1" count="29" stride="3">
+						<param name="X" type="float" />
+						<param name="Y" type="float" />
+						<param name="Z" type="float" />
+					</accessor>
+				</technique_common>
+			</source>
+			<vertices id="vertex_1" count="87">
+				<input semantic="POSITION" source="#position_1" offset="0"/> 
+			</vertices>
+			<triangles count="29" material="MATERIAL">
+				<input semantic="VERTEX" source="#vertex_1" offset="0"/> 
+				<input semantic="NORMAL" source="#normal_1" offset="1"/> 
+				<p> 
+			12 0 13 0 0 0
+			10 1 11 1 12 1
+			8 2 9 2 10 2
+			5 3 6 3 7 3
+			2 4 3 4 4 4
+			0 5 1 5 2 5
+			10 6 12 6 0 6
+			7 7 8 7 10 7
+			4 8 5 8 7 8
+			0 9 2 9 4 9
+			4 10 7 10 10 10
+			4 11 10 11 0 11
+			29 12 30 12 14 12
+			26 13 27 13 28 13
+			24 14 25 14 26 14
+			18 15 19 15 20 15
+			16 16 17 16 18 16
+			0 17 13 17 15 17
+			28 18 29 18 14 18
+			24 19 26 19 28 19
+			16 20 18 20 20 20
+			0 21 15 21 16 21
+			24 22 28 22 14 22
+			16 23 20 23 21 23
+			14 24 0 24 16 24
+			23 25 24 25 14 25
+			16 26 21 26 22 26
+			22 27 23 27 14 27
+			14 28 16 28 22 28
+				</p> 
+			</triangles>
+		</mesh>
+	</geometry>
+</library_geometries>
+<library_visual_scenes>
+	<visual_scene id="DefaultScene">
+		<node id="obj_1" name="Object">
+			<translate> 0 0 0</translate>
+ 			<rotate> 0 0 1 0</rotate>
+ 			<rotate> 0 1 0 0</rotate>
+ 			<rotate> 1 0 0 0</rotate>
+ 			<scale> 1 1 1</scale>
+			<instance_geometry url="#geometry_1">
+				<bind_material>
+					<technique_common>
+						<instance_material symbol="MATERIAL" target="#material_c5c2c6"/>
+					</technique_common>
+				</bind_material>
+			</instance_geometry>
+ 		</node>
+ </visual_scene>
+</library_visual_scenes>
+<scene>
+ <instance_visual_scene url="#DefaultScene"/>
+</scene>
+</COLLADA>
