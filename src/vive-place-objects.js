@@ -156,9 +156,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
   updateTargetPosition(point) {
     let el
+    let intersectObj = checkQTree(qt, this.previewEl, point);
+    console.log("intersecting Objects: " + intersectObj);
     if (this.el.is(STATES.DRAWING)) {
-      let intersectObj = checkQTree(qt, this.previewEl, point);
-      console.log("intersecting Objects: " + intersectObj);
       this.placeObject(point);
     }
     if (this.el.is(STATES.DRAGGING)) el = this.dragEl;
