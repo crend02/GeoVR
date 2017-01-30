@@ -1,20 +1,20 @@
 /** functions to modify the qtree */
 
 //insert object into qtree
-export function insertQTree(element, point) {
+export function insertQTree(qt, element, point) {
     let size = getsize(element);
     qt.put({ 'x': point.x, 'y': point.z, 'w': size.x, 'h': size.z, 'string': element });
-    console.log("Qtree:" + qtree);
+    console.log("Qtree:" + qt);
 }
 
 //remove an object from qtree
-export function removeFromQTree(element, point) {
+export function removeFromQTree(qt, element, point) {
     let size = getsize(element);
     qt.remove({ 'x': point.x, 'y': point.z, 'w': size.x, 'h': size.z, 'string': element });
 }
 
 //update an object in the qtree
-export function updateQTree(element, oldpoint, newpoint) {
+export function updateQTree(qt, element, oldpoint, newpoint) {
     let size = getsize(element);
     let result = qt.update({ 'x': oldpoint.x, 'y': oldpoint.z, 'w': size.x, 'h': size.z, 'string': element }, { 'x': newpoint.x, 'y': newpoint.z });
     console.log("update object: " + result);
@@ -22,7 +22,7 @@ export function updateQTree(element, oldpoint, newpoint) {
 
 //check for elements at a certain position
 // returns an array of matching objects
-export function checkQTree(element, point) {
+export function checkQTree(qt, element, point) {
     let size = getsize(element);
     let result = qt.get({ 'x': point.x, 'y': point.z, 'w': size.x, 'h': size.z })
     return result;

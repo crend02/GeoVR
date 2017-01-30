@@ -149,13 +149,13 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     newElement.classList.add(this.data.placedObjectClass);
     this.data.placedObjectContainer.appendChild(newElement);
     newElement.addEventListener('mousedown', this.onDragTargetTriggerDown);
-    insertQTree(newElement, point);
+    insertQTree(qt, newElement, point);
   },
 
   updateTargetPosition(point) {
     let el
     if (this.el.is(STATES.DRAWING)){
-      intersectObj = checkQTree(this.previewEl, point);
+      let intersectObj = checkQTree(qt, this.previewEl, point);
       console.log("intersecting Objects: "+ intersectObj);
       this.placeObject(point);
     } 
