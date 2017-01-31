@@ -11,7 +11,7 @@
   <a-scene fog="color: #8ad; far: 120; near: 70">
     <a-assets>
       <a-asset-item id="buildings-model" src="models/buildings/1_SurroundingBuildings.dae"></a-asset-item>
-      <a-asset-item id="planningarea-model" src="models/buildings/Area.dae"></a-asset-item>
+      <a-asset-item id="planningarea-model" src="models/buildings/Area.obj"></a-asset-item>
       <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
       <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
       <a-asset-item id="benchObj" src="models/objects/bench.obj"></a-asset-item>
@@ -62,7 +62,7 @@
 
     <!-- buildingview -->
     <a-entity id="buildingview" visible="true" gridhelper="size: 80; divisions: 320; colorGrid: #666; colorCenterLine: #666">
-      <a-collada-model id="planningarea" src="#planningarea-model" scale="-0.3 -0.001 0.3" rotation="0 -11.52 0" position="8.39 0 -9.37" material="color: red"></a-collada-model>
+      <a-obj-model id="planningarea" src="#planningarea-model" scale="0.36 1 0.36" rotation="0 -11.52 0" position="6.54 0 -3.74" material="color: #BABABA; side: double"></a-obj-model>
       <a-collada-model id="buildings" src="#buildings-model" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
       <a-entity id="floor" geometry="primitive: plane" material="color: #333" rotation="-90 0 0" position="0 -0.002 0" scale="180 180 180"></a-entity>
       <a-sky color="#66f"></a-sky>
