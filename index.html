@@ -52,7 +52,15 @@
     </a-assets>
 
     <!-- controllers. left hand has teleport, right hand has cursor -->
-    <a-entity id="teleport-ctrl" toggle-views teleport-controls="curveShootingSpeed: 10" vive-controls="hand: left"></a-entity>
+    <a-entity id="teleport-ctrl" toggle-views teleport-controls="curveShootingSpeed: 10" vive-controls="hand: left">
+      <a-map id="map-modal"
+        map="center: 7.64784 51.99363; zoom: 17; pxToWorldRatio: 1280"
+        width="0.4"
+        height="0.4"
+        rotation="-90 0 0"
+        position="0.3 0 0.1"
+      ></a-map>
+    </a-entity>
     <a-entity id="cursor-ctrl"
       vive-controls="hand: right"
       vive-trackpad-controls
@@ -66,14 +74,6 @@
       <a-collada-model id="buildings" src="#buildings-model" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
       <a-entity id="floor" geometry="primitive: plane" material="color: #333" rotation="-90 0 0" position="0 -0.002 0" scale="180 180 180"></a-entity>
       <a-sky color="#66f"></a-sky>
-      <!--- MAP -->
-              
-      <a-map id="map-modal" map="center: 16.363449 48.210033; zoom: 13" width="8" height="5"
-      >
-
-      </a-map>
-   
-    </a-entity>
 
     <!-- imagetour -->
     <a-entity id="imageview" visible="false">
