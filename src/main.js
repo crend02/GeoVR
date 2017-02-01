@@ -1,7 +1,6 @@
 import AFRAME from './aframe-master.js';
 import grid from 'aframe-gridhelper-component';
 import teleport from 'aframe-teleport-controls';
-import QuadTree from 'simple-quadtree';
 
 import setSky from './set_sky.js';
 import toggleViews from './toggle-views.js';

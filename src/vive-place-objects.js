@@ -9,10 +9,7 @@
 
 import AFRAME from './aframe-master.js'
 import { snapToGrid } from './helpers.js'
-import { insertQTree, removeFromQTree, checkQTree } from './qtree.js'
-
-import QuadTree from 'simple-quadtree';
-var qt = QuadTree(-75, -50, 150, 150);
+import constraintMap from './constraintmap.js'
 
 const COMPONENT_NAME = 'vive-place-objects';
 const STATES = {
@@ -154,25 +151,31 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     newElement.classList.add(this.data.placedObjectClass);
     this.data.placedObjectContainer.appendChild(newElement);
     newElement.addEventListener('mousedown', this.onDragTargetTriggerDown);
-    insertQTree(qt, newElement, point);
+
+    // add the object to the constraintMap
+    // need to wait for model to be loaded to get its dimensions (3-10ms)
+    setTimeout(() => {
+      constraintMap.insert(newElement);
+      console.log(constraintMap.check(newElement, 60));
+    }, 50);
   },
 
   updateTargetPosition(point) {
-    let el
-    let intersectObj = checkQTree(qt, this.previewEl, point);
-    console.log("intersecting Objects: " + intersectObj);
-    if (intersectObj == "" && this.el.is(STATES.DRAWING)) {
-        this.placeObject(point);
-    }
-    else
-    {
-      // todo: make preview red
-      console.log("error in placing an object, because there is already one");
-    }
+    let el;
     if (this.el.is(STATES.DRAGGING)) el = this.dragEl;
     if (!el) el = this.previewEl;
     if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
     point.y += 0.001; // avoid z-fighting
     el.setAttribute('position', point);
+
+    const neighbours = constraintMap.check(el);
+    if (neighbours && this.el.is(STATES.DRAWING)) {
+      this.placeObject(point);
+    } else if (neighbours.length) {
+      console.log("neighbours: ", neighbours);
+    } else {
+      // TODO: make preview red
+      console.log("error in placing an object, because there is already one");
+    }
   }
 });
