@@ -1,0 +1,12 @@
+{
+  "greenarea": {
+    "requires": {},
+    "forbids": {}
+  },
+  "tree": {
+    "requires": {
+      "greenarea": 0
+    },
+    "forbids": {}
+  }
+}
