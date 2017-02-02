@@ -114,6 +114,12 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
   // trigger up disables dragging mode
   onTriggerUp(ev) {
+    if (!this.el.is(STATES.DRAGGING)) return;
+    // TODO: constraints checked?
+    // update constraintMap using cached position
+    constraintMap.remove(this.dragEl, this.dragEl.lastPosition);
+    constraintMap.insert(this.dragEl);
+    this.dragEl.lastPosition = this.dragEl.getAttribute('position');
     this.el.removeState(STATES.DRAGGING);
     this.dragEl = null;
   },
@@ -121,11 +127,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   onTrackPadDown(ev) {
     // lower trackpad deletes currently dragged object
     if (ev.detail.cardinal === 'down' && this.el.is(STATES.DRAGGING)) {
+      constraintMap.remove(this.dragEl, this.dragEl.lastPosition);
       this.dragEl.parentElement.removeChild(this.dragEl);
       this.dragEl = null;
-      // delete object also from qtree
-      //removeFromQTree(qt, this.dragEl, )
-
     }
 
     // lower trackpad places a object
@@ -149,15 +153,13 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     newElement.setAttribute('position', point);
     newElement.setAttribute('mixin', this.data.placedObjectMixin);
     newElement.classList.add(this.data.placedObjectClass);
+    newElement.lastPosition = point;
     this.data.placedObjectContainer.appendChild(newElement);
     newElement.addEventListener('mousedown', this.onDragTargetTriggerDown);
 
     // add the object to the constraintMap
-    // need to wait for model to be loaded to get its dimensions (3-10ms)
-    setTimeout(() => {
-      constraintMap.insert(newElement);
-      console.log(constraintMap.check(newElement, 60));
-    }, 50);
+    // need to wait for model to be loaded to get its dimensions (~3-70ms)
+    setTimeout(() => constraintMap.insert(newElement), 80);
   },
 
   updateTargetPosition(point) {
@@ -172,10 +174,10 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     if (neighbours && this.el.is(STATES.DRAWING)) {
       this.placeObject(point);
     } else if (neighbours.length) {
-      console.log("neighbours: ", neighbours);
+      //console.log("neighbours: ", neighbours);
     } else {
       // TODO: make preview red
-      console.log("error in placing an object, because there is already one");
+      //console.log("error in placing an object, because there is already one");
     }
   }
 });
