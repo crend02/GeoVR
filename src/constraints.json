@@ -1,12 +1,87 @@
+
 {
-  "greenarea": {
+  "greenarea_big": {
+    // requires at least on of the objects enumerated in type
     "requires": {},
-    "forbids": {}
+    //forbids these objects to be placed on the same space
+    "forbids": ["greenarea_small", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_big", "footpath"]
+  },
+  "greenarea_small":{
+    "requires": {},
+    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath"]
   },
   "tree": {
+    // always just one of the types required
     "requires": {
-      "greenarea": 0
+      "type": ["greenarea_big","greenarea_small"],
+      "where": ["self"]
     },
-    "forbids": {}
+    "forbids": ["footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "footpath","tree","bench"]
+  },
+  "bench" : {
+    "requires": {
+      "type": ["greenarea_big","greenarea_small","footpath"],
+      "where": "self"
+    },
+    "forbids": [ "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "footpath","tree","bench"]
+  },
+  "footpath" : {
+    "requires": {},
+    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+  },
+  "parkingarea" : {
+    "requires": {
+      "type": ["street","street2"],
+      "where": "neighbour"
+    },
+    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+  },
+  "privatebuilding" : {
+    "requires": {
+      "type": ["street","street2", "footpath"],
+      "where": "neighbour"
+    },
+    "forbids":["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+  },
+  "publicbuilding" : {
+    "requires": {
+      "type": ["street","street2","footpath"],
+      "where": "neighbour"
+    },
+    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+  },
+  "store" : {
+    "requires": {
+      "type": ["street","street2"],
+      "where": "neighbour"
+    },
+    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+  },
+  "store2" : {
+    "requires": {
+      "type": ["street","street2"],
+      "where": "neighbour"
+    },
+    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+  },
+  "street" : {
+    "requires": {},
+    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+  },
+  "street2" : {
+    "requires": {},
+    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
+     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
   }
 }
