@@ -11,7 +11,7 @@
   <a-scene fog="color: #8ad; far: 120; near: 70">
     <a-assets>
       <a-asset-item id="buildings-model" src="models/buildings/1_SurroundingBuildings.dae"></a-asset-item>
-      <a-asset-item id="planningarea-model" src="models/buildings/Area.dae"></a-asset-item>
+      <a-asset-item id="planningarea-model" src="models/buildings/Area.obj"></a-asset-item>
       <a-asset-item id="treeObj" src="models/objects/tree.obj"></a-asset-item>
       <a-asset-item id="treeMtl" src="models/objects/tree.mtl"></a-asset-item>
       <a-asset-item id="benchObj" src="models/objects/bench.obj"></a-asset-item>
@@ -37,22 +37,30 @@
       <a-asset-item id="greenareaObj" src="models/objects/greenarea_small.obj"></a-asset-item>
       <a-asset-item id="greenareaMtl" src="models/objects/greenarea_small.mtl"></a-asset-item>
 
-      <a-mixin id="tree" scale="0.04 0.04 0.04" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
-      <a-mixin id="bench" scale="0.0625 0.0625 0.0625" obj-model="obj: #benchObj; mtl: #benchMtl"></a-mixin>
-      <a-mixin id="footpath" scale="0.3333333333333333 0.3333333333333333 0.3333333333333333" obj-model="obj: #footpathObj; mtl: #footpathMtl"></a-mixin>
-      <a-mixin id="parkingarea" scale="0.1111111111111111 0.1111111111111111 0.1111111111111111" obj-model="obj: #parkingareaObj; mtl: #parkingareaMtl"></a-mixin>
-      <a-mixin id="privatebuilding" scale="0.02564102564102564 0.02564102564102564 0.02564102564102564" obj-model="obj: #privatebuildingObj; mtl: #privatebuildingMtl"></a-mixin>
-      <a-mixin id="privatebuilding2" scale="0.025 0.025 0.025" obj-model="obj: #privatebuilding2Obj; mtl: #privatebuilding2Mtl"></a-mixin>
-      <a-mixin id="store" scale="0.025 0.025 0.025" obj-model="obj: #storeObj; mtl: #storeMtl"></a-mixin>
-      <a-mixin id="store2" scale="0.05 0.05 0.05" obj-model="obj: #store2Obj; mtl: #store2Mtl"></a-mixin>
-      <a-mixin id="street" scale="0.045454545454545456 0.045454545454545456 0.045454545454545456" obj-model="obj: #streetObj; mtl: #streetMtl"></a-mixin>
-      <a-mixin id="street2" scale="0.0625 0.0625 0.0625" obj-model="obj: #street2Obj; mtl: #street2Mtl"></a-mixin>
-      <a-mixin id="publicbuilding" scale="0.025 0.025 0.025" obj-model="obj: #publicbuildingObj; mtl: #publicbuildingMtl"></a-mixin>
-      <a-mixin id="greenarea" scale="0.076923076 0.076923076 0.076923076" obj-model="obj: #greenareaObj; mtl: #greenareaMtl"></a-mixin>
+      <a-mixin id="greenarea" obj-model="obj: #greenareaObj; mtl: #greenareaMtl"></a-mixin>
+      <a-mixin id="tree" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
+      <a-mixin id="bench" obj-model="obj: #benchObj; mtl: #benchMtl"></a-mixin>
+      <a-mixin id="footpath" scale="1 1 5.3333" obj-model="obj: #footpathObj; mtl: #footpathMtl"></a-mixin>
+      <a-mixin id="street" scale="1 1 0.55" obj-model="obj: #streetObj; mtl: #streetMtl"></a-mixin>
+      <a-mixin id="street2" scale="1 1 0.4" obj-model="obj: #street2Obj; mtl: #street2Mtl"></a-mixin>
+      <a-mixin id="parkingarea" scale="1 1 0.8182" obj-model="obj: #parkingareaObj; mtl: #parkingareaMtl"></a-mixin>
+      <a-mixin id="privatebuilding" scale="3 3 2.925" obj-model="obj: #privatebuildingObj; mtl: #privatebuildingMtl"></a-mixin>
+      <a-mixin id="privatebuilding2" scale="3 3 3" obj-model="obj: #privatebuilding2Obj; mtl: #privatebuilding2Mtl"></a-mixin>
+      <a-mixin id="publicbuilding" scale="3 3 3" obj-model="obj: #publicbuildingObj; mtl: #publicbuildingMtl"></a-mixin>
+      <a-mixin id="store" scale="3 3 3" obj-model="obj: #storeObj; mtl: #storeMtl"></a-mixin>
+      <a-mixin id="store2" scale="3 3 1.5" obj-model="obj: #store2Obj; mtl: #store2Mtl"></a-mixin>eaObj; mtl: #greenareaMtl"></a-mixin>
     </a-assets>
 
     <!-- controllers. left hand has teleport, right hand has cursor -->
-    <a-entity id="teleport-ctrl" toggle-views teleport-controls="curveShootingSpeed: 10" vive-controls="hand: left"></a-entity>
+    <a-entity id="teleport-ctrl" toggle-views teleport-controls="curveShootingSpeed: 10" vive-controls="hand: left">
+      <a-map id="map-modal"
+        map="center: 7.64784 51.99363; zoom: 17; pxToWorldRatio: 1280"
+        width="0.4"
+        height="0.4"
+        rotation="-90 0 0"
+        position="0.3 0 0.1"
+      ></a-map>
+    </a-entity>
     <a-entity id="cursor-ctrl"
       vive-controls="hand: right"
       vive-trackpad-controls
@@ -62,7 +70,7 @@
 
     <!-- buildingview -->
     <a-entity id="buildingview" visible="true" gridhelper="size: 80; divisions: 320; colorGrid: #666; colorCenterLine: #666">
-      <a-collada-model id="planningarea" src="#planningarea-model" scale="-0.3 -0.001 0.3" rotation="0 -11.52 0" position="8.39 0 -9.37" material="color: red"></a-collada-model>
+      <a-obj-model id="planningarea" src="#planningarea-model" scale="0.36 1 0.36" rotation="0 -11.52 0" position="6.54 0 -3.74" material="color: #BABABA; side: double"></a-obj-model>
       <a-collada-model id="buildings" src="#buildings-model" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
       <a-entity id="floor" geometry="primitive: plane" material="color: #333" rotation="-90 0 0" position="0 -0.002 0" scale="180 180 180"></a-entity>
       <a-sky color="#66f"></a-sky>
