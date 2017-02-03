@@ -10,6 +10,7 @@
 import AFRAME from './aframe-master.js'
 import { snapToGrid } from './helpers.js'
 import constraintMap from './constraintmap.js'
+import checkConstraints from './constraintchecker.js'
 
 const COMPONENT_NAME = 'vive-place-objects';
 const STATES = {
@@ -160,6 +161,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     // add the object to the constraintMap
     // need to wait for model to be loaded to get its dimensions (~3-70ms)
     setTimeout(() => constraintMap.insert(newElement), 80);
+    setTimeout(() => console.log(checkConstraints(newElement)), 100);
   },
 
   updateTargetPosition(point) {

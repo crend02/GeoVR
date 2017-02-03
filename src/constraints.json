@@ -1,16 +1,3 @@
-/**
- * each top level object defines constraints for its positioning:
- *
- * "self":     on same grid cell.
- *             whitelist: FORBIDS anything but "empty" by default.
- * "adjacent": on any adjacent grid cells.
- *             blacklist: ALLOWS anything by default.
- *
- * "<object>": -1   FORBIDS      <object>
- * "<object>":  1   REQUIRES     <object>
- * "<object>":  2   REQUIRES ALL <object>s with value 2 [NOT IMPLEMENTED YET]
- */
-
 {
   "greenarea": {
     "self": {},
@@ -18,61 +5,64 @@
   },
   "tree": {
     "self": {
-      "greenarea":  1,
-      "empty":     -1
+      "greenarea": "REQUIRES",
+      "empty":     "FORBIDS"
     },
     "adjacent": {}
   },
   "bench" : {
     "self": {
-      "greenarea": 1,
-      "footpath":  1
+      "greenarea": "REQUIRES",
+      "footpath":  "REQUIRES",
+      "empty":     "FORBIDS"
     },
     "adjacent": {}
   },
   "footpath" : {
     "self": {},
     "adjacent": {
-      "footpath": 1,
-      "street":   1,
-      "street2":  1
+      "footpath":    "REQUIRES",
+      "parkingarea": "REQUIRES",
+      "street":      "REQUIRES",
+      "street2":     "REQUIRES"
     }
   },
   "parkingarea" : {
     "self": {},
     "adjacent": {
-      "street":  1,
-      "street2": 1
+      "parkingarea": "REQUIRES",
+      "street":      "REQUIRES",
+      "street2":     "REQUIRES"
     }
   },
   "privatebuilding" : {
     "self": {},
     "adjacent": {
-      "footpath": 1,
-      "street":   1,
-      "street2":  1
+      "footpath": "REQUIRES",
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
     }
   },
   "publicbuilding" : {
     "self": {},
     "adjacent": {
-      "footpath": 1,
-      "street":   1,
-      "street2":  1
+      "footpath": "REQUIRES",
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
     }
   },
   "store" : {
     "self": {},
     "adjacent": {
-      "street":   1,
-      "street2":  1
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
     }
   },
   "store2" : {
     "self": {},
     "adjacent": {
-      "street":   1,
-      "street2":  1
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
     }
   },
   "street" : {
