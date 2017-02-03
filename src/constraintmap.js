@@ -45,8 +45,13 @@ const constraintMap = {
   // check for elements at a certain position
   // returns an array of matching objects
   check(element, padding = 0) {
-    // TODO: padding doesnt work?
-    return qt.get(get2DBounds(element), padding);
+    // simple-quadtree padding doesnt work. do it manually:
+    const bounds = get2DBounds(element);
+    bounds.x -= padding / 2;
+    bounds.y -= padding / 2;
+    bounds.w += padding;
+    bounds.h += padding;
+    return qt.get(bounds);
   }
 }
 

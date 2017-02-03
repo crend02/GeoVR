@@ -82,7 +82,7 @@ function checkRulesOnObjects(rules, objects, isWhitelist = false) {
 // check element against list of constraints and adjacentObjs
 export default function checkConstraints(element) {
   const rules    = constraints[getType(element)],
-    selfObjs     = constraintMap.check(element, 0),
+    selfObjs     = constraintMap.check(element),
     adjacentObjs = constraintMap.check(element, 2);
 
   // get types of objects in selfObjs/adjacent cells as object properties
