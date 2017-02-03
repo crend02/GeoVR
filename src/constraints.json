@@ -1,87 +1,86 @@
+/**
+ * each top level object defines constraints for its positioning:
+ *
+ * "self":     on same grid cell.
+ *             whitelist: FORBIDS anything but "empty" by default.
+ * "adjacent": on any adjacent grid cells.
+ *             blacklist: ALLOWS anything by default.
+ *
+ * "<object>": -1   FORBIDS      <object>
+ * "<object>":  1   REQUIRES     <object>
+ * "<object>":  2   REQUIRES ALL <object>s with value 2 [NOT IMPLEMENTED YET]
+ */
 
 {
-  "greenarea_big": {
-    // requires at least on of the objects enumerated in type
-    "requires": {},
-    //forbids these objects to be placed on the same space
-    "forbids": ["greenarea_small", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_big", "footpath"]
-  },
-  "greenarea_small":{
-    "requires": {},
-    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath"]
+  "greenarea": {
+    "self": {},
+    "adjacent": {}
   },
   "tree": {
-    // always just one of the types required
-    "requires": {
-      "type": ["greenarea_big","greenarea_small"],
-      "where": ["self"]
+    "self": {
+      "greenarea":  1,
+      "empty":     -1
     },
-    "forbids": ["footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "footpath","tree","bench"]
+    "adjacent": {}
   },
   "bench" : {
-    "requires": {
-      "type": ["greenarea_big","greenarea_small","footpath"],
-      "where": "self"
+    "self": {
+      "greenarea": 1,
+      "footpath":  1
     },
-    "forbids": [ "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "footpath","tree","bench"]
+    "adjacent": {}
   },
   "footpath" : {
-    "requires": {},
-    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+    "self": {},
+    "adjacent": {
+      "footpath": 1,
+      "street":   1,
+      "street2":  1
+    }
   },
   "parkingarea" : {
-    "requires": {
-      "type": ["street","street2"],
-      "where": "neighbour"
-    },
-    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+    "self": {},
+    "adjacent": {
+      "street":  1,
+      "street2": 1
+    }
   },
   "privatebuilding" : {
-    "requires": {
-      "type": ["street","street2", "footpath"],
-      "where": "neighbour"
-    },
-    "forbids":["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+    "self": {},
+    "adjacent": {
+      "footpath": 1,
+      "street":   1,
+      "street2":  1
+    }
   },
   "publicbuilding" : {
-    "requires": {
-      "type": ["street","street2","footpath"],
-      "where": "neighbour"
-    },
-    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+    "self": {},
+    "adjacent": {
+      "footpath": 1,
+      "street":   1,
+      "street2":  1
+    }
   },
   "store" : {
-    "requires": {
-      "type": ["street","street2"],
-      "where": "neighbour"
-    },
-    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+    "self": {},
+    "adjacent": {
+      "street":   1,
+      "street2":  1
+    }
   },
   "store2" : {
-    "requires": {
-      "type": ["street","street2"],
-      "where": "neighbour"
-    },
-    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+    "self": {},
+    "adjacent": {
+      "street":   1,
+      "street2":  1
+    }
   },
   "street" : {
-    "requires": {},
-    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+    "self": {},
+    "adjacent": {}
   },
   "street2" : {
-    "requires": {},
-    "forbids": ["greenarea_big", "footpath", "street", "street2","store",
-     "store2","privatebuilding","publicbuilding", "greenarea_small", "footpath","tree","bench"]
+    "self": {},
+    "adjacent": {}
   }
 }
