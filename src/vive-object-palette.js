@@ -31,13 +31,13 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     // create the mixins for rotation values
     const assets = document.querySelector('a-assets');
     for (let mixin of this.rotationMixins) {
-      console.log(mixin)
       let el = document.createElement('a-mixin');
       el.setAttribute('id', mixin);
       el.setAttribute('rotation', `0 ${mixin.replace(/\D/g,'')} 0`);
       assets.appendChild(el)
     }
     this.eventListeners = {
+      'click': this.onTrackpadButtonDown.bind(this),
       'trackpad-button-down': this.onTrackpadButtonDown.bind(this),
       'trackpad-scroll': this.onTrackpadScroll.bind(this),
     };
@@ -62,8 +62,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
   },
 
   onTrackpadButtonDown (ev) {
-    if (ev.detail.cardinal === 'right')     this.valIndex++;
-    else if (ev.detail.cardinal === 'left') this.valIndex--;
+    //if (ev.detail.cardinal === 'right')     this.valIndex++;
+    //else if (ev.detail.cardinal === 'left') this.valIndex--;
+    this.valIndex++;
     this.setTargetProperty();
   },
 

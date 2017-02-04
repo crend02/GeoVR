@@ -17,14 +17,3 @@ registerMap(AFRAME);
 if (process.env.NODE_ENV !== 'production') {
   require('../index.html')
 }
-
-// can't attach raycaster to collada-model which isnt loaded yet
-// see https://github.com/aframevr/aframe/issues/2319
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('buildings').addEventListener('model-loaded', () => {
-    document.getElementById('cursor-ctrl').setAttribute(
-      'vive-cursor',
-      'objects: #planningarea, .placed-object, .imagegallery, #mview'
-    );
-  });
-});
