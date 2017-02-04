@@ -1,3 +1,4 @@
+import { get2DBounds } from './helpers.js'
 import constraintMap from './constraintmap.js'
 import constraints from './constraints.json'
 
@@ -82,30 +83,55 @@ function checkRulesOnObjects(rules, objects, isWhitelist = false) {
 // check element against list of constraints and adjacentObjs
 export default function checkConstraints(element) {
   const rules    = constraints[getType(element)],
-    selfObjs     = constraintMap.check(element),
-    adjacentObjs = constraintMap.check(element, 2);
+    selfObjs     = constraintMap.check(element, -0.01), // buffer must be slightly smaller than
+    adjacentObjs = constraintMap.check(element, 0.99);  // gridsize, to avoid overlapping objs
+
+  if (!rules) return { valid: true }; // no constraints for this element defined
 
   // get types of objects in selfObjs/adjacent cells as object properties
   const { subset: selfCounts, superset: adjacentCounts }
     = getTypeCounts(selfObjs, adjacentObjs, element);
-  // console.log('selfObjs:', selfCounts); console.log('adjacentObjs:', adjacentCounts);
 
   // check both sets for their respective constraints
   const selfErrors = checkRulesOnObjects(rules.self, selfCounts, true);
   const neighbourErrors = checkRulesOnObjects(rules.adjacent, adjacentCounts);
 
-  /*console.log('checking %s %O', getType(element), element);
+  /* DEBUG
+  showBounds(element, 1);
+  console.log('checking %s %O', getType(element), element);
   if (selfErrors.length) console.log('[selfObjs] the following rules are not met:', selfErrors)
-  else console.log('selfObjs is valid.')
-
   if (neighbourErrors.length) console.log('[adjacentObjs] the following rules are not met:', neighbourErrors)
-  else console.log('adjacentObjs valid.')*/
+  else console.log('selfObjs is valid.')
+  else console.log('adjacentObjs valid.')
+  */
 
   return {
-    valid:  !(selfErrors.length || neighbourErrors.length),
+    valid: !(selfErrors.length || neighbourErrors.length),
     unmetRules: {
       selfObjs: selfErrors,
       adjacent: neighbourErrors
     }
   };
 }
+
+// create some visual helpers, showing the bounds of the checked area
+// red is self, green is adjacents
+function showBounds(element, adjaBuffer = 1) {
+  // calculate the buffer manually, assuming aframe sets the origin at the boxes center
+  // unlike simple-quadtree.
+  const bounds = get2DBounds(element);
+  const container = document.getElementById('buildingview');
+  const selfRect = createRectangle('#f44', bounds, container);
+  bounds.w += 2*adjaBuffer; bounds.h += 2*adjaBuffer;
+  const adjaRect = createRectangle('#4f4', bounds, container);
+
+  function createRectangle (color = '#f66', { x, y: z, w, h: d }, container) {
+    const rect = document.createElement('a-entity');
+    rect.setAttribute('material', { wireframe: true, color });
+    rect.setAttribute('geometry', { primitive: 'box', width: w, depth: d, height: 0.2 });
+    rect.setAttribute('position', { x, y: 0.1, z });
+    container.appendChild(rect);
+    setTimeout(() => container.removeChild(rect), 4000);
+  };
+};
+

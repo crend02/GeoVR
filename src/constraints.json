@@ -43,6 +43,14 @@
       "street2":  "REQUIRES"
     }
   },
+  "privatebuilding2" : {
+    "self": {},
+    "adjacent": {
+      "footpath": "REQUIRES",
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
+    }
+  },
   "publicbuilding" : {
     "self": {},
     "adjacent": {
