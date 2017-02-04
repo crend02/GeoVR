@@ -36,6 +36,11 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
     // define the listeners on this.el here, so we can bind them to 'this'.
     this.eventListeners = {
+      'mousedown': function() {
+        if (this.drawTargetIntersection) {
+          this.placeObject(this.drawTargetIntersection);
+        }
+      }.bind(this),
       'trackpad-button-down': this.onTrackPadDown.bind(this),
       'trackpadup': this.onTrackPadUp.bind(this),
       'mouseup': this.onTriggerUp.bind(this),

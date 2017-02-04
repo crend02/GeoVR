@@ -18,6 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('../index.html')
 }
 
+/*
 // hacky hack. can't attach raycaster to collada-model which isnt loaded yet
 // see https://github.com/aframevr/aframe/issues/2319
 setTimeout(function() {
@@ -26,3 +27,4 @@ setTimeout(function() {
     'objects: #planningarea, .placed-object, .imagegallery'
   );
 }, (2000));
+*/
