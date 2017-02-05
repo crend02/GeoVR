@@ -20,6 +20,6 @@ if (process.env.NODE_ENV !== 'production') {
 setTimeout(function() {
   document.getElementById('cursor-ctrl').setAttribute(
     'vive-cursor',
-    'objects: #planningarea, .placed-object, .imagegallery'
+    'objects: #planningarea, .placed-object, .imagegallery, #mview'
   );
 }, (2000));
