@@ -8,8 +8,8 @@ import viveCursor from './vive-cursor.js';
 import vivePlaceObjects from './vive-place-objects.js';
 import viveTrackpadControls from './vive-trackpad-controls';
 import viveObjectPalette from './vive-object-palette';
+import setImages from './set_images.js';
 import registerMap from 'aframe-map';
-
 
 registerMap(AFRAME);
 
@@ -23,6 +23,6 @@ if (process.env.NODE_ENV !== 'production') {
 setTimeout(function() {
   document.getElementById('cursor-ctrl').setAttribute(
     'vive-cursor',
-    'objects: #planningarea, .placed-object, .imagegallery'
+    'objects: #planningarea, .placed-object, .imagegallery, #mview'
   );
 }, (2000));
