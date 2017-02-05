@@ -18,11 +18,11 @@ if (process.env.NODE_ENV !== 'production') {
   require('../index.html')
 }
 
-// hacky hack. can't attach raycaster to collada-model which isnt loaded yet
+// can't attach raycaster to collada-model which isnt loaded yet
 // see https://github.com/aframevr/aframe/issues/2319
-setTimeout(function() {
+document.getElementById('buildings').addEventListener('model-loaded', () => {
   document.getElementById('cursor-ctrl').setAttribute(
     'vive-cursor',
     'objects: #planningarea, .placed-object, .imagegallery'
   );
-}, (2000));
+});

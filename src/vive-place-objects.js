@@ -70,9 +70,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       });
       this.previewEl.setAttribute('id', COMPONENT_NAME + '-preview');
 
-      // update it's position, when it's model has loaded.
+      // update it's position when it's model has loaded.
       if (this.drawTargetIntersection)
-        setTimeout(this.updateTargetPosition.bind(this), 300, this);
+        this.previewEl.addEventListener('model-loaded', this.updateTargetPosition.bind(this));
 
       // show the preview when its recreated to give feedback
       this.previewEl.setAttribute('visible', false);
