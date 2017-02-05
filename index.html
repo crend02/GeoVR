@@ -58,7 +58,11 @@
       vive-trackpad-controls
       vive-object-palette="values: tree, greenarea, bench, footpath, parkingarea, privatebuilding, privatebuilding2, store, store2, publicbuilding, street, street2; target: vive-place-objects/placedObjectMixin"
       vive-place-objects="drawTarget: #planningarea; placedObjectContainer: #buildingview"
+
     ></a-entity>
+   <!--  <a-camera position="0 2 4">
+    <a-cursor position="0 0 -1" color="#88E28C"></a-cursor>
+  </a-camera> -->
 
     <!-- buildingview -->
     <a-entity id="buildingview" visible="true" gridhelper="size: 80; divisions: 320; colorGrid: #666; colorCenterLine: #666">
@@ -66,15 +70,19 @@
       <a-collada-model id="buildings" src="#buildings-model" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
       <a-entity id="floor" geometry="primitive: plane" material="color: #333" rotation="-90 0 0" position="0 -0.002 0" scale="180 180 180"></a-entity>
       <a-sky color="#66f"></a-sky>
-      <a-sphere id="aldi_back" src="/images/center_back.jpg" radius="0.2" position="4.82 1.7 7.43" ></a-sphere>
-      <a-sphere id="aldi"  src="/images/right_back.jpg" radius="0.2" position="0.85 1.7 5.86"></a-sphere>
-      <a-sphere id="start" src="/images/right_front.jpg" radius="0.2" position="0.53 1.7 -12.13" ></a-sphere>
-      <a-sphere id="cube" src="/images/right_middle.jpg" radius="0.2" position="1.78 1.7 -3.92" ></a-sphere>
-      <a-sphere id="parking_back" src="/images/left_back.jpg" radius="0.2" position="18.18 1.7 -2.73" ></a-sphere>
-      <a-sphere id="bank" src="/images/middle_left.jpg" radius="0.2" position="17.29 1.7 -7.13" ></a-sphere>
-      <a-sphere id="bench" src="/images/middle_center.jpg" radius="0.2" position="11.13 1.7 -6.83" ></a-sphere>
-      <a-sphere id="parking_front" src="/images/left_front.jpg" radius="0.2" position="15.93 1.7 -15.03" ></a-sphere>      
-    </a-entity>
+      </a-entity>
+
+      <a-entity id="mview" visible="true" >
+        <a-sphere id="aldi_back" src="/images/center_back.jpg" radius="0.2" position="4.82 1.7 7.43" set-images="/images/center_back.jpg" ></a-sphere>
+        <a-sphere id="aldi"  src="/images/right_back.jpg" radius="0.2" position="0.85 1.7 5.86" rotation="0 90 50" set-images="/images/right_back.jpg"></a-sphere>
+        <a-sphere id="start" src="/images/right_front.jpg" radius="0.2" position="0.53 1.7 -12.13" set-images="/images/right_front.jpg" ></a-sphere>
+        <a-sphere id="cube" src="/images/right_middle.jpg" radius="0.2" position="1.78 1.7 -3.92" set-images="/images/right_middle.jpg"></a-sphere>
+        <a-sphere id="parking_back" src="/images/left_back.jpg" radius="0.2" position="18.18 1.7 -2.73" set-images="/images/left_back.jpg"></a-sphere>
+        <a-sphere id="bank" src="/images/middle_left.jpg" radius="0.2" position="17.29 1.7 -7.13" set-images="/images/middle_left.jpg"></a-sphere>
+        <a-sphere id="bench" src="/images/middle_center.jpg" radius="0.2" position="11.13 1.7 -6.83" set-images="/images/middle_center.jpg"></a-sphere>
+        <a-sphere id="parking_front" src="/images/left_front.jpg" radius="0.2" position="15.93 1.7 -15.03" set-images="/images/left_front.jpg"></a-sphere>
+        <a-sky id="image-sky" opacity="1" visible="false" radius="70" src="/images/right_front.jpg"></a-sky>      
+      </a-entity>      
 
     <!-- imagetour -->
     <a-entity id="imageview" visible="false">
