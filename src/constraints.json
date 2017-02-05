@@ -1,0 +1,84 @@
+{
+  "greenarea": {
+    "self": {},
+    "adjacent": {}
+  },
+  "tree": {
+    "self": {
+      "greenarea": "REQUIRES",
+      "empty":     "FORBIDS"
+    },
+    "adjacent": {}
+  },
+  "bench" : {
+    "self": {
+      "greenarea": "REQUIRES",
+      "footpath":  "REQUIRES",
+      "empty":     "FORBIDS"
+    },
+    "adjacent": {}
+  },
+  "footpath" : {
+    "self": {},
+    "adjacent": {
+      "footpath":    "REQUIRES",
+      "parkingarea": "REQUIRES",
+      "street":      "REQUIRES",
+      "street2":     "REQUIRES"
+    }
+  },
+  "parkingarea" : {
+    "self": {},
+    "adjacent": {
+      "parkingarea": "REQUIRES",
+      "street":      "REQUIRES",
+      "street2":     "REQUIRES"
+    }
+  },
+  "privatebuilding" : {
+    "self": {},
+    "adjacent": {
+      "footpath": "REQUIRES",
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
+    }
+  },
+  "privatebuilding2" : {
+    "self": {},
+    "adjacent": {
+      "footpath": "REQUIRES",
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
+    }
+  },
+  "publicbuilding" : {
+    "self": {},
+    "adjacent": {
+      "footpath": "REQUIRES",
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
+    }
+  },
+  "store" : {
+    "self": {},
+    "adjacent": {
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
+    }
+  },
+  "store2" : {
+    "self": {},
+    "adjacent": {
+      "street":   "REQUIRES",
+      "street2":  "REQUIRES"
+    }
+  },
+  "street" : {
+    "self": {},
+    "adjacent": {}
+  },
+  "street2" : {
+    "self": {},
+    "adjacent": {}
+  }
+}

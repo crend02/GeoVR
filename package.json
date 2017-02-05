@@ -12,7 +12,8 @@
     "aframe": "^0.4.0",
     "aframe-gridhelper-component": "^0.2.0",
     "aframe-map": "^2.1.1",
-    "aframe-teleport-controls": "^0.1.0"
+    "aframe-teleport-controls": "^0.1.0",
+    "simple-quadtree": "^0.1.3"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
