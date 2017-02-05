@@ -1,16 +1,11 @@
-import { get2DBounds } from './helpers.js'
+import { getElementType, get2DBounds } from './helpers.js'
 import constraintMap from './constraintmap.js'
 import constraints from './constraints.json'
-
-// returns the type of an element via its first mixin
-function getType(element) {
-  return element.getAttribute('mixin').split(' ')[0];
-}
 
 // takes an array of objects from the quadtree
 // and returns a unique array of their types.
 function getUniqueTypes(qtEls) {
-  return [...new Set( qtEls.map(n => getType(n.el)) )];
+  return [...new Set( qtEls.map(n => getElementType(n.el)) )];
 }
 
 // takes two arrays of objects from the quadtree,
@@ -25,7 +20,7 @@ function getTypeCounts(subset, superset, selfElement) {
 
   for(const obj of superset) {
     if (obj.el === selfElement) continue;
-    const type = getType(obj.el);
+    const type = getElementType(obj.el);
     counts.superset[type] = (counts.superset[type] || 0) + 1;
   }
 
@@ -36,7 +31,7 @@ function getTypeCounts(subset, superset, selfElement) {
       if (counts.superset[type] === 0) delete counts.superset[type];
     }
     if (obj.el === selfElement) continue;
-    const type = getType(obj.el);
+    const type = getElementType(obj.el);
     counts.subset[type] = (counts.subset[type] || 0) + 1;
   }
 
@@ -51,15 +46,17 @@ function getTypeCounts(subset, superset, selfElement) {
 // that are not explicitly required.
 // returns an array of errors, containing the rules that were not met.
 function checkRulesOnObjects(rules, objects, isWhitelist = false) {
-  let requiresOneValid = false;
+  let requiresOneValid = null;
   let errors = [];
 
   // check each rule
   for (const type in rules) {
     let ruleValid = true;
-    if (!requiresOneValid && rules[type] === 'REQUIRES') {
-      ruleValid = objects.hasOwnProperty(type);
-      requiresOneValid = true;
+    if (rules[type] === 'REQUIRES') { // TODO: improve this logic. -> swap json syntax?
+      if (requiresOneValid !== 'lol' && !objects.hasOwnProperty(type)) {
+        requiresOneValid = type;
+      } else requiresOneValid = 'lol';
+      continue;
     } else if (rules[type] === 'REQUIRES_ALL') {
       ruleValid = objects.hasOwnProperty(type);
     } else if (rules[type] === 'FORBIDS') {
@@ -68,6 +65,9 @@ function checkRulesOnObjects(rules, objects, isWhitelist = false) {
 
     if (!ruleValid) errors.push(`${rules[type]} ${type}`);
   }
+
+  if (requiresOneValid !== null && requiresOneValid !== 'lol')
+    errors.push(`${rules[requiresOneValid]} ${requiresOneValid}`);
 
   if (!isWhitelist) return errors;
 
@@ -82,7 +82,7 @@ function checkRulesOnObjects(rules, objects, isWhitelist = false) {
 
 // check element against list of constraints and adjacentObjs
 export default function checkConstraints(element) {
-  const rules    = constraints[getType(element)],
+  const rules    = constraints[getElementType(element)],
     selfObjs     = constraintMap.check(element, -0.01), // buffer must be slightly smaller than
     adjacentObjs = constraintMap.check(element, 0.99);  // gridsize, to avoid overlapping objs
 
@@ -96,9 +96,10 @@ export default function checkConstraints(element) {
   const selfErrors = checkRulesOnObjects(rules.self, selfCounts, true);
   const neighbourErrors = checkRulesOnObjects(rules.adjacent, adjacentCounts);
 
-  /* DEBUG
+  //* DEBUG
   showBounds(element, 1);
-  console.log('checking %s %O', getType(element), element);
+  showObjs(adjacentObjs);
+  /*console.log('checking %s %O', getElementType(element), element);
   if (selfErrors.length) console.log('[selfObjs] the following rules are not met:', selfErrors)
   if (neighbourErrors.length) console.log('[adjacentObjs] the following rules are not met:', neighbourErrors)
   else console.log('selfObjs is valid.')
@@ -108,7 +109,7 @@ export default function checkConstraints(element) {
   return {
     valid: !(selfErrors.length || neighbourErrors.length),
     unmetRules: {
-      selfObjs: selfErrors,
+      self: selfErrors,
       adjacent: neighbourErrors
     }
   };
@@ -121,17 +122,22 @@ function showBounds(element, adjaBuffer = 1) {
   // unlike simple-quadtree.
   const bounds = get2DBounds(element);
   const container = document.getElementById('buildingview');
-  const selfRect = createRectangle('#f44', bounds, container);
+  createRectangle('#f44', bounds, container);
+  bounds.x -= adjaBuffer; bounds.y -= adjaBuffer;
   bounds.w += 2*adjaBuffer; bounds.h += 2*adjaBuffer;
-  const adjaRect = createRectangle('#4f4', bounds, container);
+  createRectangle('#4f4', bounds, container);
+}
 
-  function createRectangle (color = '#f66', { x, y: z, w, h: d }, container) {
-    const rect = document.createElement('a-entity');
-    rect.setAttribute('material', { wireframe: true, color });
-    rect.setAttribute('geometry', { primitive: 'box', width: w, depth: d, height: 0.2 });
-    rect.setAttribute('position', { x, y: 0.1, z });
-    container.appendChild(rect);
-    setTimeout(() => container.removeChild(rect), 4000);
-  };
-};
+function showObjs(objs) {
+  const c = document.getElementById('buildingview');
+  for (const o of objs) createRectangle('#44f', o, c);
+}
 
+function createRectangle(color = '#f66', { x, y: z, w, h: d }, container) {
+  const rect = document.createElement('a-entity');
+  rect.setAttribute('material', { wireframe: true, color });
+  rect.setAttribute('geometry', { primitive: 'box', width: w, depth: d, height: 0.2 });
+  rect.setAttribute('position', { x: x + w/2, y: 0.1, z: z + d/2 });
+  container.appendChild(rect);
+  setTimeout(() => container.removeChild(rect), 500);
+}
