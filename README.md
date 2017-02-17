@@ -74,7 +74,7 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 ### Controllers 
 
-![left](images_documentation/left.png){ width=50% }
+![left](images_documentation/left.png)
 
 ### 3D Photoview
 
