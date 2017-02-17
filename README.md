@@ -12,24 +12,21 @@ The goal of this study project was to built a Virtual Reality (VR) application w
 
 Software we used 
 
-The WebVR Framework [A-frame](https://aframe.io/)
+* The WebVR Framework [A-frame](https://aframe.io/)
 
+* ES6 & WebPack
+ 
+* .obj Models were created with [MagicalVoxel](https://ephtracy.github.io/)
 
+* [Overpass Turbo](https://overpass-turbo.eu/) we collacted data of the studing area.
 
-
-ES6 & WebPack
-a-frame                 WebVR framework
-.dae & .obj Models      visuals of object templates
- openStreetMap data
-
- .obj Models were created with [MagicalVoxel](https://ephtracy.github.io/)
-
-[Overpass Turbo](https://overpass-turbo.eu/) we collacted data of the studing area.
-[qgis2threejs-plugin] (http://qgis2threejs.readthedocs.io/en/docs-release/) to provide the planning data as a .dae & .obj Models
+* [qgis2threejs-plugin] (http://qgis2threejs.readthedocs.io/en/docs-release/) to provide the planning data as a .dae & .obj Models
 
 
 
 ### Project Management
+
+The projectteam used the SCRUM software development method in combination with weekly hackathons. 
 
 The developers of the project are:
 ##### ![alt GitHub](http://i.imgur.com/0o48UoR.png") [Norwin Roosen](https://github.com/noerw)
@@ -73,12 +70,12 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 To give the user a short overview of the current state of Hamannplatz the application contains a 3D Photoview. This view was built by 8 different 360° photos which should provide orientation in an abstract VR-environment. Furthermore, the user has the possibility to switch around the photoview caused by selecting a green sphere. The green spheres point to the following  360° photo regarding the users latest positions.   
 
-*Use the trigger to switch to 3D Photoview
-*Use the laserpoint to select one of the spheres to switch around 
-*Use the trigger to switch back to Buildingview
+* Use the trigger to switch to 3D Photoview
 
-#can someone please cut the photo
-[photoview](images/photoview.png)
+* Use the laserpoint to select one of the spheres to switch around 
+
+* Use the trigger to switch back to Buildingview
+
 
 ### Buildingview
 
@@ -102,6 +99,7 @@ Moving in 3D immerisive environment is one key basic task user wants to perform.
 A curved ray displays the user pointing direction. It also responses to user if the teleport is feasible for the pointed location e.g. it changes its color from green to red when pointing to restricted location e.g. sky.
 
 link to images here
+
 #### Constraints
 
 
