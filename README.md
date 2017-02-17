@@ -10,10 +10,23 @@ The goal of this study project was to built a Virtual Reality (VR) application w
 
 ## Technologies
 
+Software we used 
+
+The WebVR Framework [A-frame](https://aframe.io/)
+
+
+
+
 ES6 & WebPack
 a-frame                 WebVR framework
 .dae & .obj Models      visuals of object templates
  openStreetMap data
+
+ .obj Models were created with [MagicalVoxel](https://ephtracy.github.io/)
+
+[Overpass Turbo](https://overpass-turbo.eu/) we collacted data of the studing area.
+[qgis2threejs-plugin] (http://qgis2threejs.readthedocs.io/en/docs-release/) to provide the planning data as a .dae & .obj Models
+
 
 
 ### Project Management
@@ -58,10 +71,14 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 ### 3D Photoview
 
-Status quo of planning area
-8 different 360°Photos
-provides orientation in abstract VR-environment
+To give the user a short overview of the current state of Hamannplatz the application contains a 3D Photoview. This view was built by 8 different 360° photos which should provide orientation in an abstract VR-environment. Furthermore, the user has the possibility to switch around the photoview caused by selecting a green sphere. The green spheres point to the following  360° photo regarding the users latest positions.   
 
+*Use the trigger to switch to 3D Photoview
+*Use the laserpoint to select one of the spheres to switch around 
+*Use the trigger to switch back to Buildingview
+
+#can someone please cut the photo
+[photoview](images/photoview.png)
 
 ### Buildingview
 
@@ -92,10 +109,12 @@ link to images here
 
 ## Limitations & Future Work
 
+During the planning process one of our requirements was to save and store the current session in the buildingview as a map. The import and export function should be one of the feature that could be implemented in future work.
+
 Manipulating Objects
 Scaling
 Draw new Objects
-Export/Import (as map)
+
 Interface for changing basic data sets (planning area, photos, collada model)
 
 
