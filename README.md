@@ -71,6 +71,11 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 ## Functionalities
 
+
+### Controllers 
+
+[left](images_documentation/left.png)
+
 ### 3D Photoview
 
 To give the user a short overview of the current state of Hamannplatz the application contains a 3D Photoview. This view was built by 8 different 360° photos which should provide orientation in an abstract VR-environment. Furthermore, the user has the possibility to switch around the photoview caused by selecting a green sphere. The green spheres point to the following  360° photo regarding the users latest positions.   
