@@ -16,7 +16,7 @@ a-frame                 WebVR framework
  openStreetMap data
 
 
-### Project Management 
+### Project Management
 
 The developers of the project are:
 ##### ![alt GitHub](http://i.imgur.com/0o48UoR.png") [Norwin Roosen](https://github.com/noerw)
@@ -68,11 +68,20 @@ provides orientation in abstract VR-environment
 Planning area
 10 different fixed object-types
 Place, rotate, move and delete with respect to constraints
-Surrounding buildings
-Collada Model from openStreetMap data
-Move via teleporting
+#### Surrounding buildings:
+In order to simulate the surrounding environment i.e. buildings present in surrounding area, COLLADA model was used. COLLADA model is an interchange file format for interactive 3D applications.
+The model was prepared using an opensource plugin in QGIS software called Qgis2threejs. The tool allows to take shapefiles as input and convert it to 3D buildings given a specified height ratio.
+The model can then be exported in different file formats including COLLADA model. The model then can simply imported in AFrame.
+###### Data:
+Data to be used in Qgis2threejs was downloaded from openStreetMap. The main files required were the boundary areas for individual buildings. The area to be reconstructed was also differentiated from environment and exported as separate layer.It helps in marking the area of interest and differentiating it from the surrounding area in virtual environment.
 
-#### Constraints 
+link to images here
+#### Teleporting
+Moving in 3D immerisive environment is one key basic task user wants to perform. This functionality was implemented using aframe-teleport-controls plugin. User can teleport to a distant point by pointing to that place a pressing a button.
+A curved ray displays the user pointing direction. It also responses to user if the teleport is feasible for the pointed location e.g. it changes its color from green to red when pointing to restricted location e.g. sky.
+
+link to images here
+#### Constraints
 
 
 ## Video
