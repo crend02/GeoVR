@@ -59,7 +59,7 @@
       <a-mixin id="privatebuilding2" scale="3 3 3" obj-model="obj: #privatebuilding2Obj; mtl: #privatebuilding2Mtl"></a-mixin>
       <a-mixin id="publicbuilding" scale="3 3 3" obj-model="obj: #publicbuildingObj; mtl: #publicbuildingMtl"></a-mixin>
       <a-mixin id="store" scale="3 3 3" obj-model="obj: #storeObj; mtl: #storeMtl"></a-mixin>
-      <a-mixin id="store2" scale="3 3 1.5" obj-model="obj: #store2Obj; mtl: #store2Mtl"></a-mixin>eaObj; mtl: #greenareaMtl"></a-mixin>
+      <a-mixin id="store2" scale="3 3 1.5" obj-model="obj: #store2Obj; mtl: #store2Mtl"></a-mixin>
     </a-assets>
 
     <!-- controllers. left hand has teleport, right hand has cursor -->
@@ -84,7 +84,7 @@
       <a-obj-model id="planningarea" src="#planningarea-model" scale="0.36 1 0.36" rotation="0 -11.52 0" position="6.54 0 -3.74" material="color: #BABABA; side: double"></a-obj-model>
       <a-collada-model id="buildings" src="#buildings-model" scale="-1 1 -1" rotation="180 -11.52 0" position="0 2 0"></a-collada-model>
       <a-entity id="floor" geometry="primitive: plane" material="color: #333" rotation="-90 0 0" position="0 -0.002 0" scale="180 180 180"></a-entity>
-      <a-sky color="#66f"></a-sky>
+      <a-entity id="sky" geometry="primitive: sphere; radius: 65;" material="shader: skyGradient; colorTop: #38475C; colorBottom: #51FCE6; side: back"></a-entity>
     </a-entity>
 
     <a-entity id="mview" visible="true" >
