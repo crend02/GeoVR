@@ -11,6 +11,7 @@
   "dependencies": {
     "aframe": "^0.4.0",
     "aframe-gridhelper-component": "^0.2.0",
+    "aframe-look-at-component": "^0.2.0",
     "aframe-map": "^2.1.1",
     "aframe-teleport-controls": "^0.1.0",
     "aframe-text-component": "^0.4.2",
