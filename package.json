@@ -13,6 +13,7 @@
     "aframe-gridhelper-component": "^0.2.0",
     "aframe-map": "^2.1.1",
     "aframe-teleport-controls": "^0.1.0",
+    "aframe-text-component": "^0.4.2",
     "simple-quadtree": "^0.1.3"
   },
   "devDependencies": {

@@ -33,6 +33,8 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     this.previewEl = null; // reference to the preview entity
     this.previewTimeout = null; // timeoutId for preview of new object
     this.drawTargetIntersection = null; // point of intersection, when intersecting with drawTarget
+    this.textEl = null; //reference to text entity showing constraints
+    this.textTimeout = null; // timeoutID for text of contraints
 
     // define the listeners on this.el here, so we can bind them to 'this'.
     this.eventListeners = {
@@ -75,9 +77,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       });
       this.previewEl.setAttribute('id', COMPONENT_NAME + '-preview');
 
-      // update it's position, when it's model has loaded.
+      // update it's position when it's model has loaded.
       if (this.drawTargetIntersection)
-        setTimeout(this.updateTargetPosition.bind(this), 300, this);
+        this.previewEl.addEventListener('model-loaded', this.updateTargetPosition.bind(this));
 
       // show the preview when its recreated to give feedback
       this.previewEl.setAttribute('visible', false);
@@ -189,7 +191,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
 
     // add the object to the constraintMap
     // need to wait for model to be loaded to get its dimensions (~3-70ms)
-    setTimeout(() => constraintMap.insert(newElement), 80);
+    newElement.addEventListener('model-loaded', () => {
+      constraintMap.insert(newElement);
+    });
   },
 
   updateTargetPosition(point = this.drawTargetIntersection) {
@@ -212,8 +216,36 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       // give visual feedback if constraints are not met
       this.previewEl.setAttribute('material', { color: '#a33' });
       this.showPreview(500);
-      // TODO: show which constraints failed
+      // show which constraints failed to user
+      this.textEl = document.createElement('a-entity');
+      if (result.unmetRules.self) {
+        var keys = Object.keys(result.unmetRules.self);
+        if(result.umnetRules.self.keys[0] = 'REQUIRES'){
+          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) needs to be placed on `+ keys[0]);
+        }
+        if(result.umnetRules.self.keys[0] = 'FORBIDS'){
+          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) forbids to be places on `+ keys[0]);
+        }   
+      }
+      if (result.unmetRules.adjacent) {
+        var keys = Object.keys(result.unmetRules.adjacent);
+        if(result.umnetRules.self.keys[0] = 'REQUIRES'){
+          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) needs to be placed next to `+ keys[0]);
+        }
+        if(result.umnetRules.self.keys[0] = 'FORBIDS'){
+          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) forbids to be places next to `+ keys[0]);
+        }
+      }
+      this.showText(500);
       console.log(`[${getElementType(el)}] invalid position, these constraints are not met:`, JSON.stringify(result, null, 2));
     }
-  }
+  },
+
+  showText(duration = 1500) {
+    this.textEl.setAttribute('visible', true);
+    if (this.textTimeout) clearTimeout(this.textTimeout);
+    this.textTimeout = setTimeout(() => {
+      this.textEl.setAttribute('visible', false);
+    }, duration);
+  },
 });

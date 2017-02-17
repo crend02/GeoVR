@@ -8,8 +8,9 @@ import viveCursor from './vive-cursor.js';
 import vivePlaceObjects from './vive-place-objects.js';
 import viveTrackpadControls from './vive-trackpad-controls';
 import viveObjectPalette from './vive-object-palette';
+import setImages from './set_images.js';
 import registerMap from 'aframe-map';
-
+import textComponent from 'aframe-text-component';
 
 registerMap(AFRAME);
 
@@ -17,6 +18,7 @@ registerMap(AFRAME);
 if (process.env.NODE_ENV !== 'production') {
   require('../index.html')
 }
+
 
 /*
 // hacky hack. can't attach raycaster to collada-model which isnt loaded yet
@@ -28,3 +30,4 @@ setTimeout(function() {
   );
 }, (2000));
 */
+
