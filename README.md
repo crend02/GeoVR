@@ -72,6 +72,10 @@ Place, rotate, move and delete with respect to constraints
 In order to simulate the surrounding environment i.e. buildings present in surrounding area, COLLADA model was used. COLLADA model is an interchange file format for interactive 3D applications.
 The model was prepared using an opensource plugin in QGIS software called Qgis2threejs. The tool allows to take shapefiles as input and convert it to 3D buildings given a specified height ratio.
 The model can then be exported in different file formats including COLLADA model. The model then can simply imported in AFrame.
+
+
+![functionality](images_documentation/aoi.png)
+
 ###### Data:
 Data to be used in Qgis2threejs was downloaded from openStreetMap. The main files required were the boundary areas for individual buildings. The area to be reconstructed was also differentiated from environment and exported as separate layer.It helps in marking the area of interest and differentiating it from the surrounding area in virtual environment.
 
