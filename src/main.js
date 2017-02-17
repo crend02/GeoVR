@@ -10,6 +10,7 @@ import viveTrackpadControls from './vive-trackpad-controls';
 import viveObjectPalette from './vive-object-palette';
 import setImages from './set_images.js';
 import registerMap from 'aframe-map';
+import textComponent from 'aframe-text-component';
 
 registerMap(AFRAME);
 
