@@ -216,9 +216,10 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       this.textEl = document.getElementById('constraint-text');
       var textposition = point;
       textposition.y += 1;
-      textposition.x += -1.5;
-      textposition.z += 0.5;
-      var textsize = 0.1;
+      // TODO: make offset relative to camera direction
+	  //textposition.x += 0.5;
+      //textposition.z += 1;
+      var textsize = 0.07;
       this.textEl.setAttribute("position", textposition);
       var rotation = this.el.sceneEl.camera.el.getAttribute("rotation");
       this.textEl.setAttribute("rotation", rotation);
@@ -227,20 +228,20 @@ AFRAME.registerComponent(COMPONENT_NAME, {
         console.log(JSON.stringify(result, null, 2));
         var str = result.unmetRules.self[0].split(' ');
         if (str[0] == 'REQUIRES') {
-          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} needs to be placed on ` + str[1], 'size': textsize });
+          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} needs to be placed on ` + str[1], 'size': textsize, height: 0.001 });
         }
         if (str[0] == 'FORBIDS') {
-          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} forbids to be places on ` + str[1], 'size': textsize });
+          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} forbids to be placed on ` + str[1], 'size': textsize, height: 0.001 });
         }
       }
       if (result.unmetRules.adjacent.length > 0) {
         console.log(JSON.stringify(result, null, 2));
         var str = result.unmetRules.adjacent[0].split(' ');
         if (str[0] == 'REQUIRES') {
-          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} needs to be placed next to ` + str[1], 'size': textsize });
+          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} needs to be placed next to ` + str[1], 'size': textsize, height: 0.001 });
         }
         if (str[0] == 'FORBIDS') {
-          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} forbids to be places next to ` + str[1], 'size': textsize });
+          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} forbids to be placed next to ` + str[1], 'size': textsize, height: 0.001 });
         }
       }
 
