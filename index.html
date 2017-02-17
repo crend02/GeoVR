@@ -41,8 +41,6 @@
       <a-asset-item id="store2Mtl" src="models/objects/store2.mtl"></a-asset-item>
       <a-asset-item id="streetObj" src="models/objects/street.obj"></a-asset-item>
       <a-asset-item id="streetMtl" src="models/objects/street.mtl"></a-asset-item>
-      <a-asset-item id="street2Obj" src="models/objects/street2.obj"></a-asset-item>
-      <a-asset-item id="street2Mtl" src="models/objects/street2.mtl"></a-asset-item>
       <a-asset-item id="publicbuildingObj" src="models/objects/publicbuilding.obj"></a-asset-item>
       <a-asset-item id="publicbuildingMtl" src="models/objects/publicbuilding.mtl"></a-asset-item>
       <a-asset-item id="greenareaObj" src="models/objects/greenarea_small.obj"></a-asset-item>
@@ -52,8 +50,7 @@
       <a-mixin id="tree" obj-model="obj: #treeObj; mtl: #treeMtl"></a-mixin>
       <a-mixin id="bench" scale="1 1 0.55" obj-model="obj: #benchObj; mtl: #benchMtl"></a-mixin>
       <a-mixin id="footpath" scale="1 1 5.3333" obj-model="obj: #footpathObj; mtl: #footpathMtl"></a-mixin>
-      <a-mixin id="street" scale="1 1 0.55" obj-model="obj: #streetObj; mtl: #streetMtl"></a-mixin>
-      <a-mixin id="street2" scale="1 1 0.4" obj-model="obj: #street2Obj; mtl: #street2Mtl"></a-mixin>
+      <a-mixin id="street" scale="1 1 0.4" obj-model="obj: #streetObj; mtl: #streetMtl"></a-mixin>
       <a-mixin id="parkingarea" scale="1 1 0.8182" obj-model="obj: #parkingareaObj; mtl: #parkingareaMtl"></a-mixin>
       <a-mixin id="privatebuilding" scale="3 3 2.925" obj-model="obj: #privatebuildingObj; mtl: #privatebuildingMtl"></a-mixin>
       <a-mixin id="privatebuilding2" scale="3 3 3" obj-model="obj: #privatebuilding2Obj; mtl: #privatebuilding2Mtl"></a-mixin>
@@ -65,7 +62,7 @@
     <!-- controllers. left hand has teleport, right hand has cursor -->
     <a-entity id="teleport-ctrl" toggle-views teleport-controls="curveShootingSpeed: 10" vive-controls="hand: left">
       <a-map id="map-modal"
-        map="center: 7.64784 51.99363; zoom: 17; pxToWorldRatio: 1280"
+        map="center: 7.64784 51.99363; zoom: 18; pxToWorldRatio: 1280"
         width="0.4"
         height="0.4"
         rotation="-90 0 0"
@@ -75,7 +72,7 @@
     <a-entity id="cursor-ctrl"
       vive-controls="hand: right"
       vive-trackpad-controls
-      vive-object-palette="values: tree, greenarea, bench, footpath, parkingarea, privatebuilding, privatebuilding2, store, store2, publicbuilding, street, street2; target: vive-place-objects/placedObjectMixin"
+      vive-object-palette="values: tree, greenarea, bench, street, footpath, parkingarea, privatebuilding, privatebuilding2, store, store2, publicbuilding; target: vive-place-objects/placedObjectMixin"
       vive-place-objects="drawTarget: #planningarea; placedObjectContainer: #buildingview"
     ></a-entity>
 
@@ -96,7 +93,7 @@
       <a-sphere id="bank" src="#foto-middle_left" radius="0.2" position="17.29 1.7 -7.13" set-images="#foto-middle_left"></a-sphere>
       <a-sphere id="bench" src="#foto-middle_center" radius="0.2" position="11.13 1.7 -6.83" set-images="#foto-middle_center"></a-sphere>
       <a-sphere id="parking_front" src="#foto-left_front" radius="0.2" position="15.93 1.7 -15.03" set-images="#foto-left_front"></a-sphere>
-      <a-sky id="image-sky" opacity="1" visible="false" radius="70" src="#foto-right_front"></a-sky>
+      <a-sky id="image-sky-mview" opacity="1" visible="false" radius="70" src="#foto-right_front"></a-sky>
     </a-entity>
 
     <!-- imagetour -->

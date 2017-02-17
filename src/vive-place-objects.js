@@ -208,9 +208,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     } else {
       // give visual feedback if constraints are not met
       this.previewEl.setAttribute('material', { color: '#a33' });
-      this.showPreview(500);
       // TODO: show which constraints failed
-      console.log(`[${getElementType(el)}] invalid position, these constraints are not met:`, JSON.stringify(result, null, 2));
+      //console.log(`[${getElementType(el)}] invalid position, these constraints are not met:`, JSON.stringify(result, null, 2));
     }
+	this.showPreview(500);
   }
 });

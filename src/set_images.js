@@ -2,7 +2,7 @@
 AFRAME.registerComponent('set-images', {
 	schema: { default: '' },
 	init() {
-		let sky = document.getElementById('image-sky');
+		let sky = document.getElementById('image-sky-mview');
 		let area = document.getElementById('planningarea');
 		let buildings = document.getElementById('buildings');
 		let view = document.getElementById('buildingview');
