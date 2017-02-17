@@ -219,21 +219,21 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       // show which constraints failed to user
       this.textEl = document.createElement('a-entity');
       if (result.unmetRules.self) {
-        var keys = Object.keys(result.unmetRules.self);
-        if(result.umnetRules.self.keys[0] = 'REQUIRES'){
-          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) needs to be placed on `+ keys[0]);
+        var str = result.unmetRules.self[0].split(' ');
+        if(str[0] == 'REQUIRES'){
+          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) needs to be placed on `+ str[1]);
         }
-        if(result.umnetRules.self.keys[0] = 'FORBIDS'){
-          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) forbids to be places on `+ keys[0]);
+        if(str[0] == 'FORBIDS'){
+          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) forbids to be places on `+ str[1]);
         }   
       }
       if (result.unmetRules.adjacent) {
-        var keys = Object.keys(result.unmetRules.adjacent);
-        if(result.umnetRules.self.keys[0] = 'REQUIRES'){
-          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) needs to be placed next to `+ keys[0]);
+        var str = result.unmetRules.self[0].split(' ');
+        if(str[0] == 'REQUIRES'){
+          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) needs to be placed next to `+ str[1]);
         }
-        if(result.umnetRules.self.keys[0] = 'FORBIDS'){
-          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) forbids to be places next to `+ keys[0]);
+        if(str[0] == 'FORBIDS'){
+          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) forbids to be places next to `+ str[1]);
         }
       }
       this.showText(500);
