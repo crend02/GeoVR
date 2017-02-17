@@ -3,7 +3,9 @@
 ## About
 > study project in winter term 2016/17 at ifgi.
 
-WebVR based toolkit for urban planners
+The goal of this study project was to built a Virtual Reality (VR) application which would facilitate the envisionment of urban planning for normal citizens. In particular it covers the "Hamannplatz" area in Muenster Coerde, Germany. To achieve this goal we used the web based VR framework [A-frame](https://aframe.io/).
+
+
 
 
 ## Technologies
