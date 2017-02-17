@@ -11,6 +11,7 @@ import viveObjectPalette from './vive-object-palette';
 import setImages from './set_images.js';
 import registerMap from 'aframe-map';
 import skyGradient from './skyGradient.js';
+import textComponent from 'aframe-text-component';
 
 registerMap(AFRAME);
 
