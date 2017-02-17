@@ -211,28 +211,40 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       // give visual feedback if constraints are not met
       this.previewEl.setAttribute('material', { color: '#a33' });
       this.showPreview(500);
+
       // show which constraints failed to user
-      this.textEl = document.createElement('a-entity');
-      if (result.unmetRules.self) {
+      this.textEl = document.getElementById('constraint-text');
+      var textposition = point;
+      textposition.y += 1;
+      textposition.x += -1.5;
+      textposition.z += 0.5;
+      var textsize = 0.1;
+      this.textEl.setAttribute("position", textposition);
+      var rotation = this.el.sceneEl.camera.el.getAttribute("rotation");
+      this.textEl.setAttribute("rotation", rotation);
+
+      if (result.unmetRules.self.length > 0) {
+        console.log(JSON.stringify(result, null, 2));
         var str = result.unmetRules.self[0].split(' ');
-        if(str[0] == 'REQUIRES'){
-          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) needs to be placed on `+ str[1]);
+        if (str[0] == 'REQUIRES') {
+          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} needs to be placed on ` + str[1], 'size': textsize });
         }
-        if(str[0] == 'FORBIDS'){
-          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) forbids to be places on `+ str[1]);
-        }   
-      }
-      if (result.unmetRules.adjacent) {
-        var str = result.unmetRules.self[0].split(' ');
-        if(str[0] == 'REQUIRES'){
-          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) needs to be placed next to `+ str[1]);
-        }
-        if(str[0] == 'FORBIDS'){
-          this.textEl.setAttribute('text', `Invalid position, ${getElementType(el)}) forbids to be places next to `+ str[1]);
+        if (str[0] == 'FORBIDS') {
+          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} forbids to be places on ` + str[1], 'size': textsize });
         }
       }
+      if (result.unmetRules.adjacent.length > 0) {
+        console.log(JSON.stringify(result, null, 2));
+        var str = result.unmetRules.adjacent[0].split(' ');
+        if (str[0] == 'REQUIRES') {
+          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} needs to be placed next to ` + str[1], 'size': textsize });
+        }
+        if (str[0] == 'FORBIDS') {
+          this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} forbids to be places next to ` + str[1], 'size': textsize });
+        }
+      }
+
       this.showText(500);
-      console.log(`[${getElementType(el)}] invalid position, these constraints are not met:`, JSON.stringify(result, null, 2));
     }
   },
 
