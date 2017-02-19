@@ -6,7 +6,7 @@
  * 'vive-trackpad-controls' events by updating some components property
  */
 
-import AFRAME from './aframe-master.js'
+import AFRAME from 'aframe'
 import { modulo } from './helpers.js'
 
 const COMPONENT_NAME = 'vive-object-palette';
@@ -31,7 +31,6 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     // create the mixins for rotation values
     const assets = document.querySelector('a-assets');
     for (let mixin of this.rotationMixins) {
-      console.log(mixin)
       let el = document.createElement('a-mixin');
       el.setAttribute('id', mixin);
       el.setAttribute('rotation', `0 ${mixin.replace(/\D/g,'')} 0`);

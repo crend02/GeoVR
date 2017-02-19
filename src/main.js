@@ -1,17 +1,17 @@
-import AFRAME from './aframe-master.js';
+import AFRAME from 'aframe';
 import grid from 'aframe-gridhelper-component';
 import teleport from 'aframe-teleport-controls';
+import viveCursor from 'aframe-vive-cursor-component';
+import textComponent from 'aframe-text-component';
+import registerMap from 'aframe-map';
 
 import setSky from './set_sky.js';
 import toggleViews from './toggle-views.js';
-import viveCursor from './vive-cursor.js';
 import vivePlaceObjects from './vive-place-objects.js';
 import viveTrackpadControls from './vive-trackpad-controls';
 import viveObjectPalette from './vive-object-palette';
 import setImages from './set_images.js';
-import registerMap from 'aframe-map';
 import skyGradient from './skyGradient.js';
-import textComponent from 'aframe-text-component';
 
 registerMap(AFRAME);
 

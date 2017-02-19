@@ -1,4 +1,4 @@
-import AFRAME from './aframe-master.js'
+import AFRAME from 'aframe'
 
 /* toggle modes on triggerdown */
 AFRAME.registerComponent('toggle-views', {

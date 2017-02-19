@@ -96,15 +96,9 @@ export default function checkConstraints(element) {
   const selfErrors = checkRulesOnObjects(rules.self, selfCounts, true);
   const neighbourErrors = checkRulesOnObjects(rules.adjacent, adjacentCounts);
 
-  //* DEBUG
-  //showBounds(element, 1);
-  //showObjs(adjacentObjs);
-  /*console.log('checking %s %O', getElementType(element), element);
-  if (selfErrors.length) console.log('[selfObjs] the following rules are not met:', selfErrors)
-  if (neighbourErrors.length) console.log('[adjacentObjs] the following rules are not met:', neighbourErrors)
-  else console.log('selfObjs is valid.')
-  else console.log('adjacentObjs valid.')
-  */
+  // DEBUG
+  // showBounds(element, 1);
+  // showObjs(adjacentObjs);
 
   return {
     valid: !(selfErrors.length || neighbourErrors.length),

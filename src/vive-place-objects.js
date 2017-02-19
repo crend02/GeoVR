@@ -7,7 +7,7 @@
  * depends on vive-controls & vive-cursor.
  */
 
-import AFRAME from './aframe-master.js'
+import AFRAME from 'aframe'
 import { snapToGrid, getElementType } from './helpers.js'
 import constraintMap from './constraintmap.js'
 import checkConstraints from './constraintchecker.js'
@@ -211,13 +211,12 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       // give visual feedback if constraints are not met
       this.previewEl.setAttribute('material', { color: '#a33' });
       
-
       // show which constraints failed to user
       this.textEl = document.getElementById('constraint-text');
       var textposition = point;
       textposition.y += 1;
       // TODO: make offset relative to camera direction
-	  //textposition.x += 0.5;
+      //textposition.x += 0.5;
       //textposition.z += 1;
       var textsize = 0.07;
       this.textEl.setAttribute("position", textposition);
@@ -225,7 +224,6 @@ AFRAME.registerComponent(COMPONENT_NAME, {
       this.textEl.setAttribute("rotation", rotation);
 
       if (result.unmetRules.self.length > 0) {
-        console.log(JSON.stringify(result, null, 2));
         var str = result.unmetRules.self[0].split(' ');
         if (str[0] == 'REQUIRES') {
           this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} needs to be placed on ` + str[1], 'size': textsize, height: 0.001 });
@@ -235,7 +233,6 @@ AFRAME.registerComponent(COMPONENT_NAME, {
         }
       }
       if (result.unmetRules.adjacent.length > 0) {
-        console.log(JSON.stringify(result, null, 2));
         var str = result.unmetRules.adjacent[0].split(' ');
         if (str[0] == 'REQUIRES') {
           this.textEl.setAttribute('text', { 'text': `Invalid position, ${getElementType(el)} needs to be placed next to ` + str[1], 'size': textsize, height: 0.001 });

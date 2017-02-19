@@ -5,7 +5,7 @@
  * this component improves aframes native 'vive-controls' events for the trackpad.
  */
 
-import AFRAME from './aframe-master.js'
+import AFRAME from 'aframe'
 import { modulo } from './helpers.js'
 
 const COMPONENT_NAME = 'vive-trackpad-controls';
