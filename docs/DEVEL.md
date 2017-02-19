@@ -27,8 +27,6 @@ This means that the implementation only consists of such components, which are
 mostly attached to the controller entities, as well as the 3D spheres.
 
 # Data formats & sources
-
-## Surrounding buildings
 In order to simulate the surrounding environment i.e. buildings present in
 surrounding area, COLLADA model was used. COLLADA model is an interchange file
 format for interactive 3D applications.
