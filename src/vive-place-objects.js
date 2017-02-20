@@ -35,6 +35,7 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     this.drawTargetIntersection = null; // point of intersection, when intersecting with drawTarget
     this.textEl = null; //reference to text entity showing constraints
     this.textTimeout = null; // timeoutID for text of contraints
+    this.lastConstraintCheck = 0; // timestamp from performance.now() of the latest of constraint check
 
     // define the listeners on this.el here, so we can bind them to 'this'.
     this.eventListeners = {
@@ -114,7 +115,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     this.drawTargetIntersection = null;
     for (let i = 0; i < ev.detail.els.length; i++) {
       if (ev.detail.els[i] === this.data.drawTarget) {
-        this.drawTargetIntersection = ev.detail.intersections[i].point;
+        const newIntersection = ev.detail.intersections[i].point;
+        this.drawTargetIntersection = this.data.snapToGrid ? snapToGrid(newIntersection, this.data.snapToGrid) : newIntersection;
+
         // only update if position changed
         if (!AFRAME.utils.deepEqual(lastIntersection, this.drawTargetIntersection))
           this.updateTargetPosition();
@@ -198,15 +201,21 @@ AFRAME.registerComponent(COMPONENT_NAME, {
     if (this.el.is(STATES.DRAWING)) this.placeObject(point);
     if (this.el.is(STATES.DRAGGING)) el = this.dragEl;
     if (!el) el = this.previewEl;
-    if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
+    //if (this.data.snapToGrid) point = snapToGrid(point, this.data.snapToGrid);
     point.y += 0.001; // avoid z-fighting
     el.setAttribute('position', point);
 
     // check for constraints on the given position
+    // rate limit to 15Hz to save performance!
+    const now = window.performance.now();
+    if (now - this.lastConstraintCheck < 67) return;
+    this.lastConstraintCheck = now;
+    
     let result = checkConstraints(el);
     this.validPosition = result.valid;
     if (result.valid) {
       this.previewEl.setAttribute('material', { color: '#3a3' });
+      this.textEl.setAttribute('visible', false);
     } else {
       // give visual feedback if constraints are not met
       this.previewEl.setAttribute('material', { color: '#a33' });
@@ -242,16 +251,9 @@ AFRAME.registerComponent(COMPONENT_NAME, {
         }
       }
 
-      this.showText(500);
+      this.textEl.setAttribute('visible', true);
     }
     this.showPreview(500);
-  },
-
-  showText(duration = 1500) {
-    this.textEl.setAttribute('visible', true);
-    if (this.textTimeout) clearTimeout(this.textTimeout);
-    this.textTimeout = setTimeout(() => {
-      this.textEl.setAttribute('visible', false);
-    }, duration);
-  },
+  }
+  
 });

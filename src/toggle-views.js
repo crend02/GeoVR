@@ -64,7 +64,7 @@ AFRAME.registerComponent('toggle-views', {
 		// readd the teleport comonent
 		document.getElementById('teleport-ctrl').setAttribute('teleport-controls', 'curveShootingSpeed: 10');
 		document.getElementById('cursor-ctrl').setAttribute('vive-place-objects', 'drawTarget: #planningarea; placedObjectContainer: #buildingview');
-		document.getElementById('cursor-ctrl').setAttribute('vive-object-palette', 'values: tree, greenarea, bench, street, footpath, parkingarea, privatebuilding, privatebuilding2, store, store2, publicbuilding; target: vive-place-objects/placedObjectMixin');
+		document.getElementById('cursor-ctrl').setAttribute('vive-object-palette', 'values: greenarea, street, footpath, tree, bench, parkingarea, privatebuilding, privatebuilding2, store, store2, publicbuilding; target: vive-place-objects/placedObjectMixin');
 		
         this.data.view1.setAttribute('visible', 'true');
         this.data.view2.setAttribute('visible', 'false');
