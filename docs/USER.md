@@ -6,7 +6,7 @@ The planning area is pre-populated with 360° imagery of the current state of
 the area to provide better orientation within the VR environment.
 
 ### Controller Mapping
-This is the mapping of controller buttons that is used for the functioniality
+This is the mapping of controller buttons that is used for the functionality
 explained below:
 
 ![left hand](left-controller.png)
@@ -25,7 +25,7 @@ from green to red when pointing to a restricted location (e.g. the sky).
 ![teleporting screenshot](TODO)
 
 ### View Modes
-There are two modes ('planning view' & 'photo view'), which provide different
+Two modes ('planning view' & 'photo view')were implemented to provide different
 views onto the planning area.
 After launching the application and entering VR mode (press `f`), the user is
 located in the planning view, with two hand-tracked controllers to use.
@@ -37,10 +37,11 @@ which should provide orientation in an abstract VR-environment. Furthermore, the
 user has the possibility to switch around the photoview caused by selecting a
 green sphere. The green spheres point to the following  360° photo regarding the
 users latest positions.
+In the Photo view the User has following capabilities:
 
-* Use the trigger to switch to 3D Photoview
+* Use the trigger to switch to 3D Photoview/Planning View
 * Use the laserpoint to select one of the spheres to switch around
-* Use the trigger to switch back to Buildingview
+* Use the trigger to switch back to Buildingview/Photoview
 
 #### Planning view  
 In the second mode, the planning view, a user can select, rotate, place, move or delete
