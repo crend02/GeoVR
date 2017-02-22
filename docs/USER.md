@@ -43,16 +43,19 @@ users latest positions.
 * Use the trigger to switch back to Buildingview
 
 #### Planning view  
-* Planning area
-* 10 different fixed object-types
-* Place, rotate, move and delete with respect to constraints
+In the second mode, the planning view, a user can select, rotate, place, move or delete
+objects with the left controller. There are ten different fixed object types. While selecting 
+an object, the objects preview will be shown at the pointed grid cell. It is green or red according 
+to whether it can be placed or not (see contraints). Additionally, it is only possible to place 
+objects into the with white indicated area, since this is the defined area of interest.
 
 ![area of interest screenshot](aoi.png)
 
-#### Constraints
+##### Constraints
 Constraints are certain requirements which have to be satisfied in order to place
 an object. These are different for every object type. For example, a tree has to be place 
-on a green area. If the constraint is fulfilled the objects preview will be displayed in 
+on a green area and a footpath has to be placed next to a street or parking area. If the 
+constraint is fulfilled the objects preview will be displayed in 
 green. If not, the preview will be displayed in red and an information will be displayed 
 explaining why the object cannot be placed.
 
