@@ -42,13 +42,18 @@ users latest positions.
 * Use the laserpoint to select one of the spheres to switch around
 * Use the trigger to switch back to Buildingview
 
-#### Planning view
+#### Planning view  
 * Planning area
 * 10 different fixed object-types
 * Place, rotate, move and delete with respect to constraints
 
 ![area of interest screenshot](aoi.png)
 
-link to images here
-
 #### Constraints
+Constraints are certain requirements which have to be satisfied in order to place
+an object. These are different for every object type. For example, a tree has to be place 
+on a green area. If the constraint is fulfilled the objects preview will be displayed in 
+green. If not, the preview will be displayed in red and an information will be displayed 
+explaining why the object cannot be placed.
+
+image showing a tree preview red with information
