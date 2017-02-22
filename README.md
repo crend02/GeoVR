@@ -12,7 +12,7 @@ If you have an HTC Vive with accompanying controllers,
 For all the other people, there's a [**product video**](TODO).
 
 ## Documentation
-* [**User docs**](docs/USER.md) - explanation of funcionality & controls
+* [**User docs**](docs/USER.md) - explanation of functionality & controls
 * [**Developer docs**](docs/DEVEL.md) - insights into architecture & build instructions
 
 ## Technologies
