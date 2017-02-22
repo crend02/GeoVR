@@ -18,7 +18,7 @@ For all the other people, there's a [**product video**](TODO).
 ## Technologies
 * [A-frame](https://aframe.io/) WebVR Framework
 * ES6 & webpack
-* .obj Models were created with [MagicalVoxel](https://ephtracy.github.io/)
+* .obj Models were created with [MagicanVoxel](https://ephtracy.github.io/)
 * [OSMOverpass Turbo API](https://overpass-turbo.eu/) we collected data of the studing area.
 * [qgis2threejs-plugin](http://qgis2threejs.readthedocs.io/en/docs-release/) to provide the geographic planning data as a .dae & .obj Models
 

@@ -20,7 +20,7 @@ npm run build
 ```
 
 # Architecture
-The aframe framework builds upon an *entity-component-system*, allowing modular
+The A-frame framework builds upon an *entity-component-system*, allowing modular
 definition of functionality, which can be attached to any object within the
 3D-scene.
 This means that the implementation only consists of such components, which are
@@ -31,16 +31,17 @@ In order to simulate the surrounding environment i.e. buildings present in
 surrounding area, COLLADA model was used. COLLADA model is an interchange file
 format for interactive 3D applications.
 The model was prepared using an opensource plugin in QGIS software called
-Qgis2threejs. The tool allows to take shapefiles as input and convert it to
+qgis2threejs. The tool allows to take shapefiles as input and convert it to
 3D buildings given a specified height ratio.
 The model can then be exported in different file formats including COLLADA
 model.
-The model then can simply imported in AFrame and must be scaled manually.
+The model then can simply imported in [A-frame](https://aframe.io/) and must be scaled manually.
 
 ![area of interest screenshot](aoi.png)
 
-Data to be used in Qgis2threejs was downloaded from openStreetMap via Overpass.
+Data to be used in qgis2threejs was downloaded from openStreetMap via Overpass.
 The main files required were the boundary areas for individual buildings.
 The area to be reconstructed was also differentiated from environment and
 exported as separate layer. It helps in marking the area of interest and
 differentiating it from the surrounding area in virtual environment.
+The obj. models were createted using MagicanVoxel, which is a opensource 8-bit voxel editor. In the editor models can be built by adding voxel on top of each other, deleteting or colouring voxel, and finally sculpting a model. With MagicanVoxel the eleven objects for placing were created such as tree, bench, street, different buildings. 
