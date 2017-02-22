@@ -46,7 +46,7 @@ users latest positions.
 In the second mode, the planning view, a user can select, rotate, place, move or delete
 objects with the left controller. There are ten different fixed object types. While selecting 
 an object, the objects preview will be shown at the pointed grid cell. It is green or red according 
-to whether it can be placed or not (see contraints). Additionally, it is only possible to place 
+to whether it can be placed or not (see (contraints)[https://github.com/crend02/GeoVR/blob/master/docs/USER.md#constraints]). Additionally, it is only possible to place 
 objects into the with white indicated area, since this is the defined area of interest.
 
 ![area of interest screenshot](aoi.png)
