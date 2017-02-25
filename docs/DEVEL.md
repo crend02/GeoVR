@@ -44,4 +44,4 @@ The main files required were the boundary areas for individual buildings.
 The area to be reconstructed was also differentiated from environment and
 exported as separate layer. It helps in marking the area of interest and
 differentiating it from the surrounding area in virtual environment.
-The obj. models were createted using MagicanVoxel, which is a opensource 8-bit voxel editor. In the editor models can be built by adding voxel on top of each other, deleteting or colouring voxel, and finally sculpting a model. With MagicanVoxel the eleven objects for placing were created such as tree, bench, street, different buildings. 
+The obj. models were built using MagicaVoxel, which is an opensource 8-bit voxel editor. Thus, models can be built by adding voxel on top of each other, deleteting or colouring voxel, and finally sculpting a model. With MagicaVoxel eleven objects for placing were built such as tree, bench, street or different buildings. 
