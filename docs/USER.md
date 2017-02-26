@@ -71,7 +71,3 @@ cannot be placed.
 ![failing constraint](constraint_forbidden.png)
 
 ![fulfilled constraint](constraint_allowed.png)
-
-### Video
-
-[![GeoVR Urban Planning](https://www.youtube.com/watch?v=C5zCGJXunqo)](https://www.youtube.com/watch?v=C5zCGJXunqo)
