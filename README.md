@@ -9,7 +9,7 @@ To achieve this goal we used the web based VR framework [A-frame](https://aframe
 If you have an HTC Vive with accompanying controllers,
 [click here to try it out!](https://crend02.github.io/GeoVR).
 
-For all the other people, there's a [**product video**](TODO).
+For all the other people, there's a [**product video**](https://www.youtube.com/watch?v=C5zCGJXunqo).
 
 ## Documentation
 * [**User docs**](docs/USER.md) - explanation of functionality & controls
