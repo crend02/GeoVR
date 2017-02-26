@@ -74,4 +74,4 @@ cannot be placed.
 
 ### Video
 
-![GeoVR Urban Planning](https://www.youtube.com/watch?v=C5zCGJXunqo)
+[![GeoVR Urban Planning](https://www.youtube.com/watch?v=C5zCGJXunqo)](https://www.youtube.com/watch?v=C5zCGJXunqo)
